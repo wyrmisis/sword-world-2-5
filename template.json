@@ -1,0 +1,36 @@
+{
+  "Actor": {
+    "types": [ "character", "monster" ],
+    "templates": {
+      "common": {
+        "hp": { "value": 0 },
+        "mp": { "value": 0 },
+        "soulscars": 0
+      }
+    },
+    "character": {
+      "templates": ["common"],
+      "xp": 0,
+      "abilityScores": {
+        "skill": {
+          "value": 0,
+          "dexterity": { "correction": 0, "growth": 0 },
+          "agility": { "correction": 0, "growth": 0 }
+        },
+        "body": {
+          "value": 0,
+          "strength": { "correction": 0, "growth": 0 },
+          "vitality": { "correction": 0, "growth": 0 }
+        },
+        "mind": {
+          "value": 0,
+          "intelligence": { "correction": 0, "growth": 0 },
+          "spirit": { "correction": 0, "growth": 0 }
+        }
+      }
+    }
+  },
+  "Item": {
+    "types": [ "weapon", "armor", "accessory", "consumable", "item", "class", "race", "skill", "feat", "spell", "monstersection", "monsterskill" ]
+  }
+}

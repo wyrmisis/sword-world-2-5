@@ -1,0 +1,25 @@
+{
+  "name": "sword-world-2-5",
+  "id": "sword-world-2-5",
+  "title": "Sword World 2.5",
+  "description": "TODO",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
+  "author": "wyrmisis",
+  "esmodules": [ "dist/system.js" ],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English (US)",
+      "path": "lang/en.json"
+    }
+  ],
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "bugs": ""
+}
