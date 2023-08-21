@@ -1,0 +1,28 @@
+{
+  "name": "sword-world-2-5",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "An implementation of the Sword World 2.5e ruleset for the Foundry Virtual Tabletop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rollup -c --watch",
+    "build": "rollup -c"
+  },
+  "author": "wyrmisis",
+  "license": "MIT",
+  "devDependencies": {
+    "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
+    "@rollup/plugin-eslint": "^9.0.4",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@types/livereload": "^0.9.2",
+    "@web/rollup-plugin-copy": "^0.4.0",
+    "eslint": "^8.46.0",
+    "prettier": "^3.0.1",
+    "rollup": "^2.37.1",
+    "rollup-plugin-import-css": "^3.3.1",
+    "rollup-plugin-livereload": "^2.0.5"
+  }
+}
