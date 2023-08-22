@@ -20,9 +20,6 @@ const isWatchMode = !!process.env.ROLLUP_WATCH;
  */
 const livereloadConfig = {
   delay: 500,
-  // need to explicitly exclude the scss entry file to prevent livereload from refreshing the page when the scss changes
-  // This allows for in-place css updates.
-  // exclusions: [/.*ose\.scss\.js$/],
 };
 
 
@@ -52,21 +49,27 @@ export default defineConfig([
       isWatchMode && livereload(livereloadConfig),
     ],
   },
-  // {
-  //   // add a special scss entry point to allow for in place CSS update via livereload
-  //   input: "src/ose.scss.js",
-  //   output: {
-  //     dir: "dist/",
-  //     format: "es",
-  //     sourcemap: false,
-  //   },
-  //   plugins: [
-  //     scss({
-  //       output: "dist/ose.css",
-  //       outputStyle: "compressed",
-  //       sourceMap: true,
-  //       watch: "src/",
-  //     }),
-  //   ],
-  // },
+  {
+    input: "src/components/index.ts",
+    output: {
+      dir: "dist/",
+      format: "es",
+      sourcemap: true,
+    },
+    plugins: [
+      nodeResolve(),
+      typescript(),
+      !isWatchMode && eslint(),
+      cssImports({
+        exclude: ['**/*.module.css']
+      }),
+      !isWatchMode && terser(),
+      copy({
+        patterns: staticFileFolders.map((folderName) => `${folderName}/**/*`),
+        rootDir: "./src/",
+      }),
+      isWatchMode && livereload(livereloadConfig),
+    ],
+  }
+  
 ]);

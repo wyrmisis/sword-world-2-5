@@ -126,6 +126,7 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
   }
 
   get #actor() {
+    // @ts-expect-error - parent exists on superclass
     return this.parent?.parent;
   }
 
