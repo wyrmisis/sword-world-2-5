@@ -1,0 +1,6 @@
+:host {
+  border-radius: .25em;
+  background-color: var(--tag-background-color, #000);
+  color: var(--tag-color, #fff);
+  padding: .25em;
+}

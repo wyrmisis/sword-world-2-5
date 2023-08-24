@@ -1,13 +1,22 @@
 import { defineConfig } from "rollup";
+
+// shared rollup plugins
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import terser from "@rollup/plugin-terser";
-import cssImports from "rollup-plugin-import-css";
-import { copy } from "@web/rollup-plugin-copy";
 import livereload from "rollup-plugin-livereload";
 import eslint from "@rollup/plugin-eslint";
 
-const staticFileFolders = ["lang", "packs", "templates"];
+// system rollup plugins
+import { copy } from "@web/rollup-plugin-copy";
+import postcss from 'rollup-plugin-postcss';
+import postcssEnv from 'postcss-preset-env';
+import postcssImport from 'postcss-import';
+
+// component module rollup plugins
+import cssImports from "rollup-plugin-import-css";
+
+const staticFileFolders = ["lang", "packs"];
 
 /**
  * Rollup injects an environment variable if watch mode is used.
@@ -19,7 +28,7 @@ const isWatchMode = !!process.env.ROLLUP_WATCH;
  * @type {import('rollup-plugin-livereload').RollupLivereloadOptions & import('livereload').CreateServerConfig}
  */
 const livereloadConfig = {
-  delay: 500,
+  delay: 300,
 };
 
 
@@ -38,13 +47,17 @@ export default defineConfig([
       nodeResolve(),
       typescript(),
       !isWatchMode && eslint(),
-      cssImports({
-        exclude: ['**/*.module.css']
-      }),
       !isWatchMode && terser(),
       copy({
-        patterns: staticFileFolders.map((folderName) => `${folderName}/**/*`),
+        patterns: [
+          ...staticFileFolders.map((folderName) => `${folderName}/**/*`),
+          "templates/**/*.hbs"
+        ],
         rootDir: "./src/",
+      }),
+      postcss({
+        extract: true,
+        plugins: [postcssImport(), postcssEnv()],
       }),
       isWatchMode && livereload(livereloadConfig),
     ],
@@ -52,7 +65,7 @@ export default defineConfig([
   {
     input: "src/components/index.ts",
     output: {
-      dir: "dist/",
+      file: 'dist/components.js',
       format: "es",
       sourcemap: true,
     },
@@ -60,14 +73,8 @@ export default defineConfig([
       nodeResolve(),
       typescript(),
       !isWatchMode && eslint(),
-      cssImports({
-        exclude: ['**/*.module.css']
-      }),
+      cssImports(),
       !isWatchMode && terser(),
-      copy({
-        patterns: staticFileFolders.map((folderName) => `${folderName}/**/*`),
-        rootDir: "./src/",
-      }),
       isWatchMode && livereload(livereloadConfig),
     ],
   }

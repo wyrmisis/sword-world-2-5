@@ -9,7 +9,8 @@
     "verified": "11"
   },
   "author": "wyrmisis",
-  "esmodules": [ "dist/system.js" ],
+  "esmodules": [ "dist/system.js", "dist/components.js" ],
+  "styles": ["dist/system.css"],
   "packs": [],
   "languages": [
     {

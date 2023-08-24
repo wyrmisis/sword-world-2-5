@@ -1,8 +1,3 @@
-// @ts-expect-error - game.system exists in v10+
-export const SYSTEM_ROOT = `/systems/${game.system.id}`;
-
-export const SYSTEM_PATH = `${SYSTEM_ROOT}/dist`;
-
 export enum GearRank {
   B = 0,
   A = 1,
@@ -69,7 +64,6 @@ export const ThrownWeaponCategories = [
 ]
 
 export enum WeaponStanceType {
-  Thrown = 0,
   OneHand = 1,
   TwoHand = 2
 }

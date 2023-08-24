@@ -1,0 +1,63 @@
+:global {
+  .sw-select {
+    display: block;
+    
+    label {
+      display: block;
+    }
+  }
+}
+
+.sheet_form {
+  flex-direction: column;
+  display: flex;
+}
+
+.header_subfields {
+  display: flex;
+}
+
+.sheet_body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: .25em;
+}
+
+.stances {
+  --icon-column-width: 2.25em;
+
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: fit-content(var(--icon-column-width)) repeat(3, fit-content(100px)) repeat(5, fit-content(var(--icon-column-width)));
+  gap: .25em;
+
+  .stance_heading {
+    color: blue;
+  }
+  .stance {
+    display: grid;
+    grid-column: span 8;
+    grid-template-columns: subgrid;
+    text-align: left;
+    gap: .25em;
+
+    
+  }
+  .stance_icon_field {
+    max-width: var(--icon-column-width);
+    text-align: center;
+  }
+
+  .stance_field {
+  }
+}
+
+.description {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+

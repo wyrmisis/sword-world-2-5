@@ -14,7 +14,7 @@ import CharacterSheet from '../actor/character.sheet';
 
 // Extrinsic items -- stuff characters own
 import WeaponDataModel from '../item/weapon.datamodel';
-// import WeaponSheet from '../item/weapon.sheet';
+import WeaponSheet from '../item/weapon.sheet';
 import ArmorDataModel from '../item/armor.datamodel';
 // import ArmorSheet from '../item/armor.sheet';
 import AccessoryDataModel from '../item/accessory.datamodel';
@@ -100,12 +100,13 @@ Hooks.on('init', () => {
 
   // Item sheets
   // @todo - Can any of these be consolidated?
-  // Items.unregisterSheet("core", ItemSheet);
-  // Items.registerSheet(game.system.id, WeaponSheet, {
-  //   types: ["weapon"],
-  //   makeDefault: true,
-  //   label: "SW.SheetItem",
-  // });
+  Items.unregisterSheet("core", ItemSheet);
+  // @ts-expect-error - The current system's ID exists on the Game object in v10+
+  Items.registerSheet(game.system.id, WeaponSheet, {
+    types: ["weapon"],
+    makeDefault: true,
+    label: "SW.SheetItem",
+  });
   // Items.registerSheet(game.system.id, ArmorSheet, {
   //   types: ["armor"],
   //   makeDefault: true,

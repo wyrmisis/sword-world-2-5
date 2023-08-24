@@ -1,3 +1,72 @@
 {
-	"SW": {}
+	"SW": {
+		"equipment": {
+			"general": {
+				"popularity": "Popularity",
+				"quantity": "Quantity",
+				"price": "Price",
+				"minimumStrength": "Minimum Strength",
+				"power": "Power",
+				"era": {
+					"current": "Current",
+					"diabolic": "Diabolic",
+					"magitech": "Magitech",
+					"magic": "Magic",
+					"divine": "Divine"
+				},
+				"gearRank": {
+					"label": "Rank",
+					"0": "B",
+					"1": "A",
+					"2": "S",
+					"3": "SS"
+				}
+			},
+			"weapon": {
+				"stances": {
+					"add": "Add new stance",
+					"remove": "Remove selected stance"
+				},
+				"stanceType": {
+					"label": "Stance",
+					"1": "1H",
+					"2": "2H"
+				},
+				"damageType": {
+					"label": "Damage Type",
+					"edged": "⚔ Edged",
+					"bludgeoning": "⚒ Bludgeoning",
+					"magical": "❇ Magic"
+				},
+				"weaponCategory": {
+					"label": "Weapon Category",
+					"sword": "Sword",
+					"axe": "Axe",
+					"spear": "Spear",
+					"mace": "Mace",
+					"staff": "Staff",
+					"flail": "Flail",
+					"warhammer": "Warhammer",
+					"wrestling": "Wrestling",
+					"thrown": "Thrown Weapon",
+					"shield": "Shield",
+					"bow": "Bow",
+					"crossbow": "Crossbow",
+					"gun": "Gun"
+				},
+				"accuracyBonus": "Weapon Accuracy",
+				"damageBonus": "Additional Damage",
+				"criticalValue": "Critical Value",
+				"range": {
+					"simplified": "Range (simplified)",
+					"standard": "Range (standard)"
+				}
+			}
+		}
+	},
+	"SWComponent": {
+		"ArmorCard": {},
+		"WeaponCard": {},
+		"Input": {}
+	}
 }

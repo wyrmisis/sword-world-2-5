@@ -2,6 +2,11 @@ import { Language, ClassType } from '../constants';
 import ActorEntity from './_entity';
 import AbilityScoreSet, { Score } from './abilityscore.character.datamodel';
 
+/**
+ * A class that represents value sets with a value, max, and related meter.
+ * 
+ * We can typically expect this to be used with HP and MP.
+ */
 class Meter {
   static multiplier = 3;
 
@@ -22,12 +27,43 @@ class Meter {
 }
 
 /**
- * @todo - Schema!
+ * A class that represents a character's movement speeds
  */
+class MovementSet {
+  /**
+   * The base value for a character's limited movement speed
+   */
+  static limitedMovement: number = 3;
+  /**
+   * The unit of measurement for movement
+   */
+  static movementUnit = 'm';
+
+  /**
+   * The base movement value, typically equal to the character's agility score
+   */
+  #base: number;
+
+  constructor(base: number = 0) {
+    this.#base = base;
+  }
+
+  get limited() {
+    return MovementSet.limitedMovement;
+  }
+
+  get normal() {
+    return this.#base;
+  }
+
+  get full() {
+    return this.#base * 3;
+  }
+}
+
 // @ts-expect-error - FVTT types package has not been updated with v10/v11 data model stuff
 class CharacterDataModel extends foundry.abstract.TypeDataModel {
   /**
-   * @todo Set up derived ability score class
    * @todo Set up derived defense class
    */
   prepareDerivedData() {
@@ -209,6 +245,9 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
     }
   }
 
+  // ----------------------------------------
+  // PRE-FILTERED ITEMS
+
   get race() {
     // @ts-expect-error - parent exists on the model's superclass
     return (this.parent as ActorEntity)?.items
@@ -254,6 +293,9 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
       .filter(({ type }: Item) => type === 'feat') || [];
   }
 
+  // ----------------------------------------
+  // DEFENSES
+
   /**
    * The base evasion score, calculated by adding the following:
    * - currently equipped armor/shield's evasion bonuses
@@ -271,6 +313,7 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
     // @ts-expect-error - property exists on the model's schema
     return armorEvasion + (this.abilityScores?.skill.agility.modifier || 0);
   }
+
   /**
    * The total defensive value of all equipped armor
    */
@@ -282,6 +325,7 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
       .filter(i => i.system.isEquipped)
       .reduce(reducer, 0);
   }
+
   /**
    * The character's fortitude score
    */
@@ -289,6 +333,7 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
     // @ts-expect-error - property exists on the model's schema
     return this.adventurerLevel + (this.abilityScores?.body.vitality.modifier || 0);
   }
+
   /**
    * The character's willpower score
    */
@@ -296,6 +341,10 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
     // @ts-expect-error - property exists on the model's schema
     return this.adventurerLevel + (this.abilityScores?.mind.spirit.modifier || 0);
   }
+
+  // ----------------------------------------
+  // ADVANCEMENT
+
   /**
    * Unspent XP, available for use to buy levels in classes
    */
@@ -305,6 +354,7 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
     // @ts-expect-error - I will use reducers to give me numbers from Items and you can't stop me.
     return this.classes.reduce(reducer, this.xp) as unknown as number;
   }
+
   /**
    * The highest-level class that this character has
    */
@@ -317,6 +367,9 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
         : i.system.level;
     return this.classes.reduce(reducer, 1);
   }
+
+  // ----------------------------------------
+  // BONUSES TO CHECK PACKAGES
 
   get techniquePackageBonus() {
     return this.#getFlaggedPackageBonus(
@@ -366,8 +419,12 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
     );
   }
 
+  // ----------------------------------------
+  // ATTACK/DAMAGE BONUSES
+
   /**
    * The character's base accuracy
+   * @todo Should this be reworked to be a map of class IDs and accuracy values?
    */
   get accuracy() {
     // @ts-expect-error - property exists on the model's schema
@@ -377,6 +434,8 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
   /**
    * The character's base extra damage for all 
    * weapon types but crossbows and guns
+   * 
+   * @todo Should this be reworked to be a map of class IDs and accuracy values?
    */
   get extraDamage() {
     // @ts-expect-error - property exists on the model's schema
@@ -395,18 +454,41 @@ class CharacterDataModel extends foundry.abstract.TypeDataModel {
     return 0;
   }
 
+
+  // ----------------------------------------
+  // MOVEMENT
+
+  get movement() {
+    return new MovementSet(
+      // @ts-expect-error - this.abilityScores exists on the schema
+      this.abilityScores.skill.agility.value
+    );
+  }
+
+  
+  // ----------------------------------------
+  // UTILS
+  // (could be moved out of the class?)
+
+  /**
+   * @todo This should really return a Map of class item ID to (class level + modifier).
+   * 
+   * @param classFlag - The flag to look for on all of an Actor's classes
+   * @param modifier - The ability score modifier to add to the output
+   * @returns A total of class levels with a given flag plus the ability score modifier
+   */
   #getFlaggedPackageBonus(classFlag: string, modifier: number) {
     if (!classFlag)
       return 0;
     // @ts-expect-error - FVTT types package does not include system object on Items
     const reducer = (total: number, i: Item) => total + i.system.level;
-    const techniqueClassLevels = this.classes
+    const classLevels = this.classes
       // @ts-expect-error - FVTT types package does not include system object on Items
       .filter(i => i.system[classFlag])
       .reduce(reducer, 0);
-    if (!techniqueClassLevels)
+    if (!classLevels)
       return 0;
-    return modifier + techniqueClassLevels;
+    return modifier + classLevels;
   }
 }
 

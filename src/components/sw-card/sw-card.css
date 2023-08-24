@@ -1,0 +1,47 @@
+:host {
+  display: block;
+}
+
+slot[name="icon"]::slotted(img) {
+  width: 32px;
+  max-height: 32px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: .25em;
+  padding: .25em;
+  background-color: var(--title-background-color, #444);
+  color: var(--title-color, #fff);
+}
+
+.title {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.tags {
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+}
+
+:host > div,
+:host > main {
+  padding: .25em;
+}
+
+:host > div {
+  background-color: #888;
+}
+
+:host > main {
+  background-color: #aaa;
+}

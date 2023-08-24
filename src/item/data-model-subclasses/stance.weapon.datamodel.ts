@@ -30,6 +30,7 @@ export default class WeaponStance {
   accuracy: number;
   extraDamage: number;
   criticalValue: number;
+  weaponCategory: WeaponCategory;
   range: StanceRange;
 
   #actorStrength: number;
@@ -63,11 +64,12 @@ export default class WeaponStance {
     this.accuracy = accuracy + (classItem?.accuracy?.[weaponCategory] || 0);
     // @ts-expect-error - we're building the class item's extra damage object kinda weird
     this.extraDamage = extraDamage + (classItem?.extraDamage?.[weaponCategory] || 0);
-    this.criticalValue = criticalValue + actor?.criticalValueModifier || 0;
+    this.criticalValue = criticalValue + (actor?.criticalValueModifier || 0);
     this.range = range;
+    this.weaponCategory = weaponCategory;
 
     // @ts-expect-error - Property exists on model schema
-    this.#actorStrength = actor?.abilityScores.body.strength.value;
+    this.#actorStrength = actor?.abilityScores?.body.strength.value;
   }
 
   get canBeUsed() {

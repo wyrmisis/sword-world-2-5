@@ -53,15 +53,13 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
         accuracy: new NumberField({
           initial: 0,
           nullable: false,
-          integer: true,
         }),
         extraDamage: new NumberField({
           initial: 0,
           nullable: false,
-          integer: true,
         }),
         criticalValue: new NumberField({
-          initial: 0,
+          initial: 12,
           nullable: false,
           integer: true,
           min: 3,
@@ -84,7 +82,21 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
           initial: false,
           nullable: false
         })
-      })
+      }),
+      {
+        initial: [{
+          stanceType: WeaponStanceType.OneHand,
+          damageType: WeaponDamageType.Edged,
+          weaponCategory: WeaponCategory.Sword,
+          power: 0,
+          minimumStrength: 0,
+          accuracy: 0,
+          extraDamage: 0,
+          criticalValue: 12,
+          range: { simplified: 0, standard: 0 },
+          usesAmmunition: false
+        }]
+      }
     );
 
     return {
@@ -141,14 +153,17 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
   get canBeUsed() {
     if (!this.#actor) return false;
     if (!this.attackingClass) return false;
-    
-    console.info(this.attackingClass.accuracy)
-
+  
     //@ts-expect-error - this.stances exists on the schema
     const hasAvailableStance = this.stances
       .some((s: WeaponStance) => s.canBeUsed);
 
     return true;
+  }
+
+  get stanceTemplate() {
+    // @ts-expect-error - schema comes from the superclass
+    return this.schema.fields.stances.options.initial[0];
   }
 }
 
