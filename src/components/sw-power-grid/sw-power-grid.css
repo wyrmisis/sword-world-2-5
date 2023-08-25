@@ -1,0 +1,35 @@
+:host {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding: .25em;
+  border-radius: .25em;
+  text-align: center;
+  min-width: 300px;
+}
+
+.set {
+  display: flex;
+  flex-direction:column;
+  gap: .25em;
+}
+
+svg {
+  height: .8em;
+}
+
+.dice-result {
+  background-color: rgba(52, 52, 52, 0.95);
+  color: var(--color-text-light-highlight);
+  fill: var(--color-text-light-highlight);
+}
+.value {}
+
+.fail .dice-result {
+  background-color: var(--color-level-error);
+}
+.fail .value {}
+
+.critical .dice-result {
+  background-color: var(--color-level-info);
+}
+.critical .value {}
