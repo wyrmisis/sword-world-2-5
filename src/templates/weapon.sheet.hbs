@@ -5,7 +5,35 @@
       <input type="text" value="{{item.name}}" name="name" aria-label="" />
       <div class="{{styles.header_subfields}}">
         <sw-input type="text" data-dtype="Number" value="{{item.system.quantity}}" name="system.quantity">Qty</sw-input>
-        <sw-input type="text" data-dtype="Number" value="{{item.system.price}}" name="system.price">Price</sw-input>
+      </div>
+    </section>
+  </header>
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="summary">
+      {{localize "SW.equipment.general.navigation.summary"}}
+    </a>
+    <a class="item" data-tab="details">
+      {{localize "SW.equipment.general.navigation.details"}}
+    </a>
+    <a class="item" data-tab="stances">
+      {{localize "SW.equipment.weapon.navigation.stances"}}
+    </a>
+  </nav>
+  <section class="sheet-body {{styles.sheet_body}}">
+    {{!-- Summary tab --}}
+    <div class="tab {{styles.tab_summary}}" data-group="primary" data-tab="summary">
+    </div>
+
+    {{!-- Edit Details tab --}}
+    <div class="tab {{styles.tab_details}}" data-group="primary" data-tab="details">
+      <aside>
+        <sw-input type="text" data-dtype="Number" value="{{item.system.price}}" name="system.price">
+          {{localize "SW.equipment.general.price"}}
+        </sw-input>
+        <sw-input type="text" data-dtype="Number" value="{{item.system.popularity}}" name="system.popularity">
+          {{localize "SW.equipment.general.popularity"}}
+        </sw-input>
+        
         <div class="sw-select">
           <label for="system.rank">{{localize "SW.equipment.general.gearRank.label"}}</label>
           <select name="system.rank">
@@ -15,17 +43,39 @@
             }}
           </select>
         </div>
-      </div>
-    </section>
-  </header>
-  <main class="{{styles.sheet_body}}">
-    <aside>
 
-    </aside>
+        <div class="sw-select">
+          <label for="system.era">{{localize "SW.equipment.general.era.label"}}</label>
+          <select name="system.era">
+            {{selectOptions options.era
+              selected=item.system.era
+              localize=true
+            }}
+          </select>
+        </div>
+
+        <div class="sw-checkbox">
+          <input type="checkbox" name="system.isMagical" {{checked item.system.isMagical}} />
+          <label for="system.isSilvered">{{localize "SW.equipment.weapon.isMagical"}}</label>
+        </div>
+        <div class="sw-checkbox">
+          <input type="checkbox" name="system.isSilvered" {{checked item.system.isSilvered}} />
+          <label for="system.isSilvered">{{localize "SW.equipment.weapon.isSilvered"}}</label>
+        </div>
+
+      </aside>
     
-    <div class="{{styles.stances}}">
-    {{!-- <ul class="{{styles.stances}}"> --}}
-      {{!-- <li class="{{styles.stance}} {{styles.stance_heading}}"> --}}
+      <main>
+      {{editor item.system.description
+        target="system.description"
+        engine="prosemirror"}}
+      </main>
+    </div>
+
+    {{!-- Edit Stances tab --}}
+
+    <div class="tab {{styles.tab_stances}}" data-group="primary" data-tab="stances">
+      <div class="{{styles.stances}}">
         <button type="button" class="add" data-index="{{@index}}" aria-label="{{localize "SW.equipment.weapons.stances.add"}}">
           <i class="fa-solid fa-plus"></i>
         </button>
@@ -58,36 +108,53 @@
           <span class="sr-only">{{localize "SW.equipment.general.power"}}</span>
           <i class="fa-solid fa-hand-fist"></i>
         </span>
-      {{!-- </li>
-      <li class="{{styles.stance}}"> --}}
-      {{#each item.system.stances}}
-        <button type="button" class="remove" data-index="{{@index}}" aria-label="{{localize "SW.equipment.weapons.stances.remove"}}">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-        <select name="{{concat "system.stances." @index ".stanceType"}}">
-          {{selectOptions @root.options.stanceType selected=this.stanceType localize=true}}
-          {{!-- <option>1H</option> --}}
-        </select>
-        <select name="{{concat "system.stances." @index ".damageType"}}">
-          {{selectOptions @root.options.damageType selected=this.damageType localize=true}}
-          {{!-- <option>{{localize "SW.equipment.weapon.damageType.bludgeoning"}}</option> --}}
-        </select>
-        <select name="{{concat "system.stances." @index ".weaponCategory"}}">
-          {{selectOptions @root.options.weaponCategory selected=this.weaponCategory localize=true}}
-          {{!-- <option>Thrown Weapon</option> --}}
-        </select>
+        {{#each item.system.stances}}
+          <button type="button" class="remove" data-index="{{@index}}" aria-label="{{localize "SW.equipment.weapons.stances.remove"}}">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <select name="{{concat "system.stances." @index ".stanceType"}}">
+            {{selectOptions @root.options.stanceType selected=this.stanceType localize=true}}
+          </select>
+          <select name="{{concat "system.stances." @index ".damageType"}}">
+            {{selectOptions @root.options.damageType selected=this.damageType localize=true}}
+          </select>
+          <select name="{{concat "system.stances." @index ".weaponCategory"}}">
+            {{selectOptions @root.options.weaponCategory selected=this.weaponCategory localize=true}}
+          </select>
 
-        <input type="text" value="{{this.minimumStrength}}" name="{{concat "system.stances." @index ".minimumStrength"}}" class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="text" value="{{this.accuracy}}" name="{{concat "system.stances." @index ".accuracy"}}" class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="text" value="{{this.extraDamage}}" name="{{concat "system.stances." @index ".extraDamage"}}" class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="text" value="{{this.criticalValue}}" name="{{concat "system.stances." @index ".criticalValue"}}" class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="text" value="{{this.power}}" name="{{concat "system.stances." @index ".power"}}" class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-      {{/each}}
-      {{!-- </li> --}}
-    {{!-- </ul> --}}
+          <input
+            type="text"
+            value="{{this.minimumStrength}}"
+            name="{{concat "system.stances." @index ".minimumStrength"}}"
+            class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}"
+            data-dtype="Number" />
+          <input
+            type="text"
+            value="{{this.accuracy}}"
+            name="{{concat "system.stances." @index ".accuracy"}}"
+            class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}"
+            data-dtype="Number" />
+          <input
+            type="text"
+            value="{{this.extraDamage}}"
+            name="{{concat "system.stances." @index ".extraDamage"}}"
+            class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}"
+            data-dtype="Number" />
+          <input
+            type="text"
+            value="{{this.criticalValue}}"
+            name="{{concat "system.stances." @index ".criticalValue"}}"
+            class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}"
+            data-dtype="Number" />
+          <input
+            type="text"
+            value="{{this.power}}"
+            name="{{concat "system.stances." @index ".power"}}"
+            class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}"
+            data-dtype="Number" />
+        {{/each}}
+      </div>
     </div>
-    {{editor item.system.description
-      target="system.description"
-      engine="prosemirror"}}
+    
   </main>
 </form>

@@ -2,12 +2,17 @@
 	"SW": {
 		"equipment": {
 			"general": {
+				"navigation": {
+					"summary": "Summary",
+					"details": "Edit Details"
+				},
 				"popularity": "Popularity",
 				"quantity": "Quantity",
 				"price": "Price",
 				"minimumStrength": "Minimum Strength",
 				"power": "Power",
 				"era": {
+					"label": "Era",
 					"current": "Current",
 					"diabolic": "Diabolic",
 					"magitech": "Magitech",
@@ -23,6 +28,9 @@
 				}
 			},
 			"weapon": {
+				"navigation": {
+					"stances": "Edit Weapon Stances"
+				},
 				"stances": {
 					"add": "Add new stance",
 					"remove": "Remove selected stance"
@@ -67,6 +75,10 @@
 	"SWComponent": {
 		"ArmorCard": {},
 		"WeaponCard": {},
-		"Input": {}
+		"Input": {},
+		"PowerGrid": {
+			"diceResult": "Roll Result",
+			"value": "Effect Value"
+		}
 	}
 }

@@ -27,7 +27,7 @@ class WeaponSheet extends ItemSheet {
       classes: sheetClasses,
       width: 584,
       height: 800,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".tab-group__container", initial: "summary" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "summary" }]
     });
   }
 
