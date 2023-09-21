@@ -26,6 +26,7 @@ header {
   display: flex;
   overflow: hidden;
   text-overflow: ellipsis;
+  gap: .25em;
 }
 
 .controls {

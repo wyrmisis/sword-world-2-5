@@ -1,6 +1,8 @@
 :host {
-  border-radius: .25em;
+  display: inline-block;
+  font-size: var(--font-size-12);
+  border-radius: .5em;
   background-color: var(--tag-background-color, #000);
   color: var(--tag-color, #fff);
-  padding: .25em;
+  padding: .25em .5em;
 }

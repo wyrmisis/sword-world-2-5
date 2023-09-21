@@ -1,0 +1,17 @@
+.stances {
+  display: grid;
+  padding: .25em;
+  margin: 0;
+  list-style: none;
+}
+
+.description {
+  padding: .25em;
+  & > *:first-child {
+    margin-top: 0;
+  }
+  & > *:last-child {
+    margin-bottom: 0;
+  }
+}
+

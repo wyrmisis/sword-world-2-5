@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  gap: .25em;
+  align-items: center;
+}
+
+sw-input {
+  --input-max-width: 2.5em;
+}
+
+progress[value] {
+  appearance: none;
+
+  width: 100%;
+  height: 1em;
+
+  border: none;
+
+  ::-webkit-progress-value {
+    background-color: var(--meter-color);
+  }
+}

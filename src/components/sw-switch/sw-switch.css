@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  gap: .25em;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-border-light-tertiary);
+  border-radius: .25em;
+  height: calc(var(--form-field-height) + 1px);
+  width: fit-content;
+  padding: 3px;
+}
+
+:host(:not([disabled]):not([readonly])) {
+  cursor: pointer;
+}
+
+input {
+  display: none;
+}
+
+.container {
+  display: flex;
+  gap: .25em;
+}
+
+:host([checked]) .label--on,
+:host(:not([checked])) .label--off {
+  background-color: var(--switch-background-active, #000);
+  color: var(--switch-text-active, #fff);
+}
+
+.label {
+  border-radius: .25em;
+  padding: 0 .25em;
+}

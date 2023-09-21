@@ -15,10 +15,20 @@ export default class SwInput extends BaseComponent {
     return [styles];
   }
 
+  async connectedCallback(): Promise<void> {
+    await super.connectedCallback();
+
+    this.toggleAttribute('no-label', this.#noLabel);
+  }
+
   get template() {
     return /* html */ `
-      <label id="label"><slot></slot></label>
-      <input type="text" data-dtype="${this.dataset.dtype || "String"}" aria-labeledby="label" value="${this.value}" />
+      <label id="label" class="${!this.#noLabel ? "" : "empty"}"><slot></slot></label>
+      <input ${
+        this.disabled ? 'disabled ' : ''
+      }${
+        this.readonly ? 'readonly ' : ''
+      }type="text" data-dtype="${this.dataset.dtype || "String"}" aria-labeledby="label" value="${this.value}" />
     `;
   }
 
@@ -28,5 +38,17 @@ export default class SwInput extends BaseComponent {
 
   #onChange(e: Event) {
     this.value = (e.target as HTMLInputElement).value;
+  }
+
+  get #noLabel() {
+    return !Array.from(this.childNodes).length;
+  }
+
+  get readonly() {
+    return this.hasAttribute("readonly");
+  }
+
+  get disabled() {
+    return this.hasAttribute("disabled");
   }
 }
