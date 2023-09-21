@@ -55,10 +55,8 @@ export default class SwPowerGrid extends BaseComponent {
   }
 
   get #labels() {
-    // @ts-expect-error - game.i18n exists
-    const diceResultTitle = game.i18n.localize("SWComponent.PowerGrid.diceResult");
-    // @ts-expect-error - game.i18n exists
-    const valueTitle = game.i18n.localize("SWComponent.PowerGrid.value");
+    const diceResultTitle = SwPowerGrid.localize("SWComponent.PowerGrid.diceResult");
+    const valueTitle = SwPowerGrid.localize("SWComponent.PowerGrid.value");
 
     return /* html */ `
       <span class="set">

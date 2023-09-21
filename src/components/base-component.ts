@@ -110,4 +110,14 @@ export default class BaseComponent extends HTMLElement {
   get name() {
     return this.getAttribute("name") || "";
   }
+
+  static localize(s: string) {
+    // @ts-expect-error - game.i18n exists
+    return game.i18n.localize(s);
+  }
+
+  static format(s: string, options: Record<string, unknown>) {
+    // @ts-expect-error - game.i18n exists
+    return game.i18n.format(s, options);
+  }
 }
