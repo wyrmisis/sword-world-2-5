@@ -1,41 +1,53 @@
-<form autocomplete="off">
+<form autocomplete="off" class="{{cssClasses}} flexcol">
   <header class="sheet-header">
-    <img src="{{actor.img}}" data-edit="img" />
-    <section class="sheet-header__character-info">
-      <input type="text" value="{{actor.name}}" />
-      
-      <input readonly value="{{actor.system.adventurerLevel}}" />
-      
-      <div class="meter meter--hp">
-        <input type="text" data-dtype="Number" name="system.hp.value" value="{{actor.system.hp.value}}" />/
-        <input readonly data-dtype="Number" value="{{actor.system.hp.max}}" />
-        <progress value="{{actor.system.hp.value}}" max="{{actor.system.hp.max}}" />
+    <div class="character-image">
+      <img src="{{actor.img}}" data-edit="img" />
+      <span class="adventurer-level">
+        {{actor.system.adventurerLevel}}
+      </span>
+    </div>
+    <section class="header-fields">
+      <div class="header-field-group">
+        <input type="text" value="{{actor.name}}" />
       </div>
 
-      <div class="meter meter--mp">
-        <input type="text" data-dtype="Number" name="system.mp.value" value="{{actor.system.mp.value}}" />/
-        <input readonly data-dtype="Number" value="{{actor.system.mp.max}}" />
-        <progress value="{{actor.system.mp.value}}" max="{{actor.system.mp.max}}" />
+      <div class="header-field-block">
+        <sw-meter name="system.hp.value" value="{{actor.system.hp.value}}" max="{{actor.system.hp.max}}">
+          {{localize "SWSheets.character.HP"}}
+        </sw-meter>
+
+        <sw-meter name="system.mp.value" value="{{actor.system.mp.value}}" max="{{actor.system.mp.max}}">
+          {{localize "SWSheets.character.MP"}}
+        </sw-meter>
       </div>
 
-      <div class="defenses">
-        <input readonly data-dtype="Number" value="{{actor.system.evasion}}" />
-        <input readonly data-dtype="Number" value="{{actor.system.defense}}" />
-        <input readonly data-dtype="Number" value="{{actor.system.fortitude}}" />
-        <input readonly data-dtype="Number" value="{{actor.system.willpower}}" />
+      <div class="header-field-block">
+        <h3 class="label">{{localize "SWSheets.character.defenses.label"}}</h3>
+        <sw-input readonly data-dtype="Number" value="{{actor.system.evasion}}">{{localize "SWSheets.character.defenses.evasion"}}</sw-input>
+        <sw-input readonly data-dtype="Number" value="{{actor.system.defense}}">{{localize "SWSheets.character.defenses.defense"}}</sw-input>
+        <sw-input readonly data-dtype="Number" value="{{actor.system.fortitude}}">{{localize "SWSheets.character.defenses.fortitude"}}</sw-input>
+        <sw-input readonly data-dtype="Number" value="{{actor.system.willpower}}">{{localize "SWSheets.character.defenses.willpower"}}</sw-input>
       </div>
 
-      <div class="movement">
-        <input readonly data-dtype="Number" value="{{actor.system.movement.limited}}" />
-        <input readonly data-dtype="Number" value="{{actor.system.movement.normal}}" />
-        <input readonly data-dtype="Number" value="{{actor.system.movement.full}}" />
+      <div class="header-field-block">
+        <h3 class="label">{{localize "SWSheets.character.movement.label"}}</h3>
+        <sw-input readonly data-dtype="Number" value="{{actor.system.movement.limited}}">{{localize "SWSheets.character.movement.limited"}}</sw-input>
+        <sw-input readonly data-dtype="Number" value="{{actor.system.movement.normal}}">{{localize "SWSheets.character.movement.normal"}}</sw-input>
+        <sw-input readonly data-dtype="Number" value="{{actor.system.movement.full}}">{{localize "SWSheets.character.movement.full"}}</sw-input>
       </div>
     </section>
   </header>
-  <nav class="">
 
+  <nav class="">
   </nav>
+  
   <main class="sheet-body">
+    <h2>Classes</h2>
+    <ul>
+      {{#each actor.system.classes}}
+      <li onclick="fromUuidSync('{{uuid}}').sheet.render(true)">{{name}}</li>
+      {{/each}}
+    </ul>
 
     <div class="inventory">
       <h2>Weapons</h2>
