@@ -4,7 +4,8 @@
 			"general": {
 				"navigation": {
 					"summary": "Summary",
-					"details": "Edit Details"
+					"description": "Description",
+					"effects": "Active Effects"
 				},
 				"popularity": "Popularity",
 				"quantity": "Quantity",
@@ -21,6 +22,8 @@
 				},
 				"gearRank": {
 					"label": "Rank",
+					"ofRank": "Rank {rank}",
+					"ofRankType": "Rank {rank} {itemtype}",
 					"0": "B",
 					"1": "A",
 					"2": "S",
@@ -29,7 +32,7 @@
 			},
 			"weapon": {
 				"navigation": {
-					"stances": "Edit Weapon Stances"
+					"stances": "Weapon Stances"
 				},
 				"stances": {
 					"add": "Add new stance",
@@ -68,17 +71,124 @@
 				"range": {
 					"simplified": "Range (simplified)",
 					"standard": "Range (standard)"
+				},
+				"plusDamage": "+ {amount} damage",
+				"isGrapplerGear": "Is Grappler gear",
+				"usesAmmunition": "Uses Ammunition",
+				"isMagical": "Magical",
+				"isSilvered": "Silvered"
+			}
+		},
+		"characterOptions": {
+			"general": {
+				"navigation": {
+					"summary": "Summary",
+					"config": "Configuration",
+					"details": "Edit Details",
+					"description": "Description",
+					"effects": "Active Effects"
+				}
+			},
+			"class": {
+				"navigation": {},
+				"level": {
+					"label": "Level",
+					"shortLabel": "Lv.",
+					"value": "Level {level}",
+					"xp": "XP",
+					"xpSpent": "XP Spent",
+					"xpNext": "XP to Next"
+				},
+				"xpTable": {
+					"label": "XP Table to use",
+					"major": "Major",
+					"minor": "Minor"
+				},
+				"classType": {
+					"label": "Class Type",
+					"warrior": "Warrior",
+					"wizard": "Wizard",
+					"other": "Other"
+				},
+				"flags": {
+					"label": "Flags",
+					"weapons": {
+						"label": "Weapon Categories",
+						"addsTo": "Can use {key}",
+						"shooting": "shooting weapons",
+						"bullets": "bullets (required for guns)",
+						"thrown": "thrown weapons",
+						"melee": "melee weapons",
+						"wrestling": "wrestling weapons",
+						"grappling": "grappling gear"
+					},
+					"combatModifiers": {
+						"label": "Combat Modifiers",
+						"addsTo": "{key}",
+						"evasion": "Evasion",
+						"accuracy": "Accuracy",
+						"damage": "Extra Damage",
+						"initiative": "Initiative",
+						"monsterKnowledge": "Monster Knowledge"
+					},
+					"skillPackages": {
+						"label": "Skill Packages",
+						"addsTo": "{key}",
+						"technique": "Technique",
+						"movement": "Movement",
+						"observation": "Observation",
+						"knowledge": "Knowledge"
+					}
 				}
 			}
 		}
 	},
+
+	"SWSheets": {
+		"character": {
+			"HP": "HP",
+			"MP": "MP",
+			"defenses": {
+				"label": "Defenses",
+				"evasion": "Evasion",
+				"defense": "Defense",
+				"willpower": "Willpower",
+				"fortitude": "Fortitude"
+			},
+			"movement": {
+				"label": "Movement",
+				"limited": "Limited",
+				"normal": "Normal",
+				"full": "Full"
+			}
+		}
+	},
+
 	"SWComponent": {
 		"ArmorCard": {},
-		"WeaponCard": {},
+		"WeaponCard": {
+			"share": "Share to chat",
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"Switch": {
+			"on": "On",
+			"off": "Off"
+		},
 		"Input": {},
 		"PowerGrid": {
 			"diceResult": "Roll Result",
 			"value": "Effect Value"
+		}
+	},
+
+	"TYPES": {
+		"Actor": {
+			"character": "Character",
+			"monster": "Monster"
+		},
+		"Item": {
+			"weapon": "Weapon"
 		}
 	}
 }

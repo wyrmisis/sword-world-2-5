@@ -1,3 +1,39 @@
-.sheet--item .editor.prosemirror {
-  flex: 1;
+.sheet--item {  
+  .editor.prosemirror {
+    flex: 1;
+  }
+
+  .tab[data-tab] {
+    &.active {
+      height: 100%;
+    }
+
+    &.tab--description {
+      main {
+        display: flex;
+        height: inherit;
+      }
+    }
+
+    &.tab--details {
+      grid-template-columns: 1fr 2fr;
+      gap: .5em;
+      
+      &.active {
+        display: grid;
+      }
+  
+      aside {
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+  
+        sw-input {
+          grid-column: 1/-1;
+          --input-max-width: 5em;
+        }
+      }
+    }
+  }
 }
+

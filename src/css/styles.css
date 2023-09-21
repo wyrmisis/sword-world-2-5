@@ -1,3 +1,5 @@
 @import 'variables.css';
 
+@import 'sheets/shared.css';
 @import 'sheets/item-sheets.css';
+@import 'sheets/actor-sheets.css';

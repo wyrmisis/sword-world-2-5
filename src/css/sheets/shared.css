@@ -1,0 +1,21 @@
+.sheet--item,
+.sheet--actor {  
+  .sheet-header {
+    flex: 0;
+    .header-fields {}
+    .header-field-group {
+      display: flex;
+      align-items: center;
+      gap: .5em;
+
+      &:not(:last-of-type) {
+        margin-bottom: .25em;
+      }
+    }
+  }
+
+  .tabs {
+    flex: 0;
+  }
+}
+
