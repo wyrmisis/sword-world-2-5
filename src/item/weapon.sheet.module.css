@@ -6,6 +6,11 @@
       display: block;
     }
   }
+
+  .sw-checkbox {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .sheet_form {
@@ -24,8 +29,14 @@
   gap: .25em;
 }
 
-.tab_details {
-  
+.field_quantity,
+.field_popularity {
+  --input-max-width: 2.5em;
+  text-align: center;
+}
+
+.field_era {
+  margin-left: auto;
 }
 
 .stances {
@@ -34,27 +45,36 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: fit-content(var(--icon-column-width)) repeat(3, fit-content(100px)) repeat(5, fit-content(var(--icon-column-width)));
+  align-items: center;
+  grid-template-columns: fit-content(var(--icon-column-width))
+                          repeat(3, fit-content(100px))
+                          repeat(7, fit-content(var(--icon-column-width)));
   gap: .25em;
 
-  .stance_heading {
-    color: blue;
+  span:nth-of-type(-n+10) {
+    font-weight: bold;
   }
-  .stance {
-    display: grid;
-    grid-column: span 8;
-    grid-template-columns: subgrid;
-    text-align: left;
-    gap: .25em;
 
-    
-  }
   .stance_icon_field {
     max-width: var(--icon-column-width);
     text-align: center;
   }
+  
+  button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    line-height: 1em;
+    text-align: center;
+  }
 
-  .stance_field {
+  .power_grid {
+    grid-column: 2/-1;
+    border-radius: .25em;
+    border: 1px solid rgba(52, 52, 52, 0.95);
+    padding: 0;
+    margin-bottom: .75em;
   }
 }
 

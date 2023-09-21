@@ -11,11 +11,10 @@ import styles from './weapon.sheet.module.css';
  */
 class WeaponSheet extends ItemSheet {
   static get customFields () {
-    return ["sw-input"].join(", "); 
+    return ["sw-input, sw-select"].join(", "); 
   }
 
   get template() {
-    console.info(styles);
     // @ts-expect-error - game.system exists in v10+
     return `/systems/${game.system.id}/dist/templates/weapon.sheet.hbs`;
   }
@@ -25,13 +24,12 @@ class WeaponSheet extends ItemSheet {
 
     return mergeObject(super.defaultOptions, {
       classes: sheetClasses,
-      width: 584,
-      height: 800,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "summary" }]
+      width: 580,
+      height: 440,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }
 
-  // @ts-expect-error - Typescript is unhappy with adding our own stuff to the returned object
   getData() {
     const enumToKeyval = (obj: Record<string, string>, key: any, translationKey: string) => ({
       ...obj,
@@ -47,7 +45,7 @@ class WeaponSheet extends ItemSheet {
     return {
       ...super.getData(),
       styles,
-      options: {
+      selectOptions: {
         // @ts-expect-error - Compiler doesn't like enums with numeric values in reducers
         stanceType: Object.values(WeaponStanceType).filter(k => typeof k === 'number').reduce(stanceToKeyval, {}),
         damageType: Object.values(WeaponDamageType).reduce(damageTypeToKeyval, {}),
@@ -78,13 +76,11 @@ class WeaponSheet extends ItemSheet {
   activateListeners(html: JQuery<HTMLElement>): void {
     super.activateListeners(html);
 
-    html.on("change", WeaponSheet.customFields, this._onChangeInput.bind(this));
+    html.on("change", WeaponSheet.customFields, (e) => {
+      this._onChangeInput(e)
+    });
     html.on("click", '.add', this.#addNewStance.bind(this));
     html.on("click", '.remove', this.#removeStance.bind(this));
-
-    // html.find(`${styles.stance}`).on('hover', (e: Event) => {
-    //   game.tooltip.activate(e.target, {text: "Test!"})
-    // })
   }
 
   #addNewStance(e: Event) {

@@ -81,6 +81,10 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
         usesAmmunition: new BooleanField({
           initial: false,
           nullable: false
+        }),
+        isGrapplerGear: new BooleanField({
+          initial: false,
+          nullable: false
         })
       }),
       {
@@ -94,7 +98,8 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
           extraDamage: 0,
           criticalValue: 12,
           range: { simplified: 0, standard: 0 },
-          usesAmmunition: false
+          usesAmmunition: false,
+          isGrapplerGear: false,
         }]
       }
     );
@@ -142,6 +147,17 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
     return this.parent?.parent;
   }
 
+  get attackingClassOptions() {
+    if (!this.#actor) return [];
+    if (!this.weaponCategories.length) return [];
+    
+    return this.#actor.system.classes.filter((cls: Item) =>
+      this.weaponCategories.some(
+        // @ts-expect-error - cls.system exists
+        (cat: unknown) => Object.keys(cls.system.accuracy).includes(cat as string)
+      ))
+  }
+
   get attackingClass() {
     //@ts-expect-error - this.attackingClassId exists on the schema
     return this.#actor?.items.get(this.attackingClassId);
@@ -164,6 +180,14 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
   get stanceTemplate() {
     // @ts-expect-error - schema comes from the superclass
     return this.schema.fields.stances.options.initial[0];
+  }
+
+  get weaponCategories() {
+    //@ts-expect-error - this.stances exists on the schema
+    if (!this.stances.length)
+      return [];
+    //@ts-expect-error - this.stances exists on the schema
+    return [...new Set(this.stances.map((s: StanceSchema) => s.weaponCategory))]
   }
 }
 

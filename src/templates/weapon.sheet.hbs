@@ -1,70 +1,62 @@
-<form autocomplete="off" class="{{cssClass}} {{styles.sheet_form}}">
+<form autocomplete="off" class="{{cssClass}} flexcol">
   <header class="sheet-header">
     <img src="{{item.img}}" data-edit="img" />
-    <section class="{{styles.header_fields}}">
-      <input type="text" value="{{item.name}}" name="name" aria-label="" />
-      <div class="{{styles.header_subfields}}">
-        <sw-input type="text" data-dtype="Number" value="{{item.system.quantity}}" name="system.quantity">Qty</sw-input>
-      </div>
-    </section>
-  </header>
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="summary">
-      {{localize "SW.equipment.general.navigation.summary"}}
-    </a>
-    <a class="item" data-tab="details">
-      {{localize "SW.equipment.general.navigation.details"}}
-    </a>
-    <a class="item" data-tab="stances">
-      {{localize "SW.equipment.weapon.navigation.stances"}}
-    </a>
-  </nav>
-  <section class="sheet-body {{styles.sheet_body}}">
-    {{!-- Summary tab --}}
-    <div class="tab {{styles.tab_summary}}" data-group="primary" data-tab="summary">
-    </div>
-
-    {{!-- Edit Details tab --}}
-    <div class="tab {{styles.tab_details}}" data-group="primary" data-tab="details">
-      <aside>
+    <div class="header-fields">
+      <div class="header-field-group">
+        <input type="text" value="{{item.name}}" name="name">
+        <sw-input class="{{styles.field_quantity}}" type="text" data-dtype="Number" value="{{item.system.quantity}}" name="system.quantity">Qty</sw-input>
         <sw-input type="text" data-dtype="Number" value="{{item.system.price}}" name="system.price">
           {{localize "SW.equipment.general.price"}}
         </sw-input>
-        <sw-input type="text" data-dtype="Number" value="{{item.system.popularity}}" name="system.popularity">
-          {{localize "SW.equipment.general.popularity"}}
-        </sw-input>
         
-        <div class="sw-select">
-          <label for="system.rank">{{localize "SW.equipment.general.gearRank.label"}}</label>
-          <select name="system.rank">
-            {{selectOptions options.rank
-              selected=item.system.rank
-              localize=true
-            }}
-          </select>
-        </div>
-
-        <div class="sw-select">
-          <label for="system.era">{{localize "SW.equipment.general.era.label"}}</label>
-          <select name="system.era">
-            {{selectOptions options.era
-              selected=item.system.era
-              localize=true
-            }}
-          </select>
-        </div>
+      </div>
+      <div class="header-field-group">
+        <sw-select name="system.rank" value="{{item.system.rank}}">
+          <span slot="label">{{localize "SW.equipment.general.gearRank.label"}}</span>
+          {{selectOptions selectOptions.rank
+            selected=item.system.rank
+            localize=true
+          }}
+        </sw-select>
 
         <div class="sw-checkbox">
           <input type="checkbox" name="system.isMagical" {{checked item.system.isMagical}} />
           <label for="system.isSilvered">{{localize "SW.equipment.weapon.isMagical"}}</label>
         </div>
+
         <div class="sw-checkbox">
           <input type="checkbox" name="system.isSilvered" {{checked item.system.isSilvered}} />
           <label for="system.isSilvered">{{localize "SW.equipment.weapon.isSilvered"}}</label>
         </div>
 
-      </aside>
-    
+        <sw-select class="{{styles.field_era}}" name="system.era" value="{{item.system.era}}">
+          <span slot="label">{{localize "SW.equipment.general.era.label"}}</span>
+          {{selectOptions selectOptions.era
+            selected=item.system.era
+            localize=true
+          }}
+        </sw-select>
+
+        <sw-input class="{{styles.field_popularity}}" type="text" data-dtype="Number" value="{{item.system.popularity}}" name="system.popularity">
+          {{localize "SW.equipment.general.popularity"}}
+        </sw-input>
+      </div>
+    </div>
+  </header>
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">
+      {{localize "SW.equipment.general.navigation.description"}}
+    </a>
+    <a class="item" data-tab="stances">
+      {{localize "SW.equipment.weapon.navigation.stances"}}
+    </a>
+    <a class="item" data-tab="effects">
+      {{localize "SW.equipment.general.navigation.effects"}}
+    </a>
+  </nav>
+  <section class="sheet-body {{styles.sheet_body}}">
+    {{!-- Description tab --}}
+    <div class="tab tab--description {{styles.tab_description}}" data-group="primary" data-tab="description">
       <main>
       {{editor item.system.description
         target="system.description"
@@ -79,6 +71,7 @@
         <button type="button" class="add" data-index="{{@index}}" aria-label="{{localize "SW.equipment.weapons.stances.add"}}">
           <i class="fa-solid fa-plus"></i>
         </button>
+        {{!-- Labels --}}
         <span data-tooltip="SW.equipment.weapon.stanceType.label">
           {{localize "SW.equipment.weapon.stanceType.label"}}
         </span>
@@ -108,18 +101,28 @@
           <span class="sr-only">{{localize "SW.equipment.general.power"}}</span>
           <i class="fa-solid fa-hand-fist"></i>
         </span>
+        <span data-tooltip="SW.equipment.weapon.isGrapplerGear" class="{{styles.stance_icon_field}}">
+          <span class="sr-only">{{localize "SW.equipment.weapon.isGrapplerGear"}}</span>
+          <i class="fa-solid fa-boxing-glove"></i>
+        </span>
+        <span data-tooltip="SW.equipment.weapon.usesAmmunition" class="{{styles.stance_icon_field}}">
+          <span class="sr-only">{{localize "SW.equipment.weapon.usesAmmunition"}}</span>
+          <i class="fa-solid fa-bow-arrow"></i>
+        </span>
+
+        {{!-- Rows --}}
         {{#each item.system.stances}}
           <button type="button" class="remove" data-index="{{@index}}" aria-label="{{localize "SW.equipment.weapons.stances.remove"}}">
             <i class="fa-solid fa-xmark"></i>
           </button>
           <select name="{{concat "system.stances." @index ".stanceType"}}">
-            {{selectOptions @root.options.stanceType selected=this.stanceType localize=true}}
+            {{selectOptions @root.selectOptions.stanceType selected=this.stanceType localize=true}}
           </select>
           <select name="{{concat "system.stances." @index ".damageType"}}">
-            {{selectOptions @root.options.damageType selected=this.damageType localize=true}}
+            {{selectOptions @root.selectOptions.damageType selected=this.damageType localize=true}}
           </select>
           <select name="{{concat "system.stances." @index ".weaponCategory"}}">
-            {{selectOptions @root.options.weaponCategory selected=this.weaponCategory localize=true}}
+            {{selectOptions @root.selectOptions.weaponCategory selected=this.weaponCategory localize=true}}
           </select>
 
           <input
@@ -152,9 +155,24 @@
             name="{{concat "system.stances." @index ".power"}}"
             class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}"
             data-dtype="Number" />
+          <input
+            type="checkbox"
+            name="{{concat "system.stances." @index ".isGrapplerGear"}}"
+            class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}"
+            {{checked this.isGrapplerGear}} />
+          <input
+            type="checkbox"
+            name="{{concat "system.stances." @index ".usesAmmunition"}}"
+            class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}"
+            {{checked this.usesAmmunition}} />
+
+          <sw-power-grid class="{{@root.styles.power_grid}}" value="{{this.power}}" critical="{{this.criticalValue}}"></sw-power-grid>
         {{/each}}
       </div>
     </div>
     
+    <div class="tab {{styles.tab_effects}}" data-group="primary" data-tab="effects">
+      Active Effects
+    </div>
   </main>
 </form>

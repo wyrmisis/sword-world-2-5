@@ -13,6 +13,8 @@ export type StanceSchema = {
   extraDamage: number,
   criticalValue: number,
   weaponCategory: WeaponCategory,
+  isGrapplerGear: boolean,
+  usesAmmunition: boolean,
   range: StanceRange
 }
 
@@ -27,13 +29,23 @@ export default class WeaponStance {
   power: number;
   powerTable: Map<number, number | null> | undefined;
   minimumStrength: number;
-  accuracy: number;
-  extraDamage: number;
-  criticalValue: number;
+  
   weaponCategory: WeaponCategory;
   range: StanceRange;
+  isGrapplerGear: boolean;
+  usesAmmunition: boolean;
 
   #actorStrength: number;
+
+  criticalValue: number;
+  #actorCriticalValueModifier: number;
+
+  accuracy: number;
+  #classAccuracy: number;
+
+  extraDamage: number;
+  #classExtraDamage: number;
+  #classCanUseGrapplerGear: boolean;
 
   /**
    * 
@@ -51,6 +63,8 @@ export default class WeaponStance {
       extraDamage,
       criticalValue,
       weaponCategory,
+      isGrapplerGear,
+      usesAmmunition,
       range
     }: StanceSchema,
     actor: CharacterDataModel,
@@ -61,19 +75,53 @@ export default class WeaponStance {
     this.power = power;
     this.powerTable = powerTable.get(power) as Map<number, number|null>;
     this.minimumStrength = minimumStrength;
-    this.accuracy = accuracy + (classItem?.accuracy?.[weaponCategory] || 0);
+
+    this.accuracy = accuracy;
+    this.#classAccuracy = classItem?.accuracy?.[weaponCategory] || 0;
+
+    this.extraDamage = extraDamage;
     // @ts-expect-error - we're building the class item's extra damage object kinda weird
-    this.extraDamage = extraDamage + (classItem?.extraDamage?.[weaponCategory] || 0);
-    this.criticalValue = criticalValue + (actor?.criticalValueModifier || 0);
+    this.#classExtraDamage = classItem?.extraDamage?.[weaponCategory] || 0;
+    
+    this.criticalValue = criticalValue;
+    this.#actorCriticalValueModifier = (actor?.criticalValueModifier || 0);
+    
     this.range = range;
+    this.usesAmmunition = usesAmmunition;
+
     this.weaponCategory = weaponCategory;
+    this.isGrapplerGear = isGrapplerGear;
+    // @ts-expect-error - Property exists on model schema
+    this.#classCanUseGrapplerGear = classItem?.canAllowGrapplerGear;
 
     // @ts-expect-error - Property exists on model schema
     this.#actorStrength = actor?.abilityScores?.body.strength.value;
   }
 
+  /**
+   * Can the current actor and class combo use this stance?
+   */
   get canBeUsed() {
-    return this.#actorStrength >= this.minimumStrength;
+    // Check for if this class has access to this weapon category
+    if (!this.#classAccuracy)
+      return false;
+    // Check for minimum strength
+    if (this.#actorStrength < this.minimumStrength)
+      return false;
+    // A few Warrior-type classes can use wrestling weapons, but can't use Grappler-
+    // specific gear
+    if (this.isGrapplerGear && !this.#classCanUseGrapplerGear)
+      return false;
+    
+    return true;
+  }
+
+  get modifiers() {
+    return {
+      accuracy: this.accuracy + this.#classAccuracy,
+      extraDamage: this.extraDamage + this.#classExtraDamage,
+      criticalValue: this.criticalValue + this.#actorCriticalValueModifier
+    }
   }
 
   /**
@@ -84,8 +132,8 @@ export default class WeaponStance {
    */
   async rollAccuracy(bonus: number) {
     const terms = !bonus 
-      ? `2d6+${this.accuracy}`
-      : `2d6+${this.accuracy}+${bonus}`
+      ? `2d6+${this.modifiers.accuracy}`
+      : `2d6+${this.modifiers.accuracy}+${bonus}`
     const roll = await new Roll(terms).evaluate();
     return roll;
   }
@@ -100,14 +148,14 @@ export default class WeaponStance {
   async rollDamage(situationalBonus: number, critBonus = 0) {
     const { rolls, result } = await powerRollWithCrits(
       this.power,
-      this.criticalValue + critBonus
+      this.modifiers.criticalValue + critBonus
     );
 
     return {
       rolls,
       result,
       total: (result !== null && result !== undefined)
-        ? result + this.extraDamage + situationalBonus
+        ? result + this.modifiers.extraDamage + situationalBonus
         : result
     }
   }
