@@ -28,7 +28,7 @@ import ItemDataModel from '../item/item.datamodel';
 // import RaceDataModel from '../item/race.datamodel';
 // import RaceSheet from '../item/race.sheet';
 import ClassDataModel from '../item/class.datamodel';
-// import ClassSheet from '../item/class.sheet';
+import ClassSheet from '../item/class.sheet';
 // import FeatDataModel from '../item/feat.datamodel';
 // import FeatSheet from '../item/feat.sheet';
 // import SpellDataModel from '../item/spell.datamodel';
@@ -59,6 +59,9 @@ import ClassDataModel from '../item/class.datamodel';
  * @todo Assign data model and sheet - Item - Monster Unique Skill
  */
 Hooks.on('init', () => {
+  // @ts-expect-error - The current system's ID exists on the Game object in v10+
+  const { id } = game.system;
+
   CONFIG.Actor.documentClass = ActorEntity;
   // CONFIG.Item.documentClass = ItemEntity;
 
@@ -86,13 +89,12 @@ Hooks.on('init', () => {
 
   // Actor sheets
   Actors.unregisterSheet("core", ActorSheet);
-  // @ts-expect-error - The current system's ID exists on the Game object in v10+
-  Actors.registerSheet(game.system.id, CharacterSheet, {
+  Actors.registerSheet(id, CharacterSheet, {
     types: ["character"],
     makeDefault: true,
     label: "SW.SheetCharacter",
   });
-  // Actors.registerSheet(game.system.id, MonsterSheet, {
+  // Actors.registerSheet(id, MonsterSheet, {
   //   types: ["monster"],
   //   makeDefault: true,
   //   label: "SW.SheetMonster",
@@ -101,58 +103,57 @@ Hooks.on('init', () => {
   // Item sheets
   // @todo - Can any of these be consolidated?
   Items.unregisterSheet("core", ItemSheet);
-  // @ts-expect-error - The current system's ID exists on the Game object in v10+
-  Items.registerSheet(game.system.id, WeaponSheet, {
+  Items.registerSheet(id, WeaponSheet, {
     types: ["weapon"],
     makeDefault: true,
     label: "SW.SheetItem",
   });
-  // Items.registerSheet(game.system.id, ArmorSheet, {
+  // Items.registerSheet(id, ArmorSheet, {
   //   types: ["armor"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(game.system.id, AccessorySheet, {
+  // Items.registerSheet(id, AccessorySheet, {
   //   types: ["accessory"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(game.system.id, ConsumableSheet, {
+  // Items.registerSheet(id, ConsumableSheet, {
   //   types: ["consumable"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(game.system.id, ItemsSheet, {
+  // Items.registerSheet(id, ItemsSheet, {
   //   types: ["item"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(game.system.id, RaceSheet, {
+  // Items.registerSheet(id, RaceSheet, {
   //   types: ["race"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(game.system.id, ClassSheet, {
-  //   types: ["class"],
-  //   makeDefault: true,
-  //   label: "SW.SheetItem",
-  // });
-  // Items.registerSheet(game.system.id, SpellSheet, {
+  Items.registerSheet(id, ClassSheet, {
+    types: ["class"],
+    makeDefault: true,
+    label: "SW.SheetItem",
+  });
+  // Items.registerSheet(id, SpellSheet, {
   //   types: ["spell"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(game.system.id, FeatSheet, {
+  // Items.registerSheet(id, FeatSheet, {
   //   types: ["feat"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(game.system.id, MonsterSectionSheet, {
+  // Items.registerSheet(id, MonsterSectionSheet, {
   //   types: ["monstersection"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(game.system.id, MonsterSkillSheet, {
+  // Items.registerSheet(id, MonsterSkillSheet, {
   //   types: ["monsterskill"],
   //   makeDefault: true,
   //   label: "SW.SheetItem",
