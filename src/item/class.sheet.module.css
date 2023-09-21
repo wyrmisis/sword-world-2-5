@@ -1,0 +1,40 @@
+.field_level {
+  --input-max-width: 2.25em;
+}
+
+.field_xp {
+  --input-max-width: 5em;
+}
+
+.field_xpTable {
+  margin-left: auto;
+}
+
+.field_classType {
+  display: flex;
+  align-items: center;
+  gap: .25em;
+
+  label {
+    white-space: nowrap;
+  }
+}
+
+
+.flag_group {
+  display: grid;
+  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5em;
+}
+
+.flag_list {
+  display: grid;
+  grid-template-columns: fit-content(2em) 1fr;
+  gap: .25em;
+  align-items: start;
+
+  h3 {
+    grid-column: 1/-1;
+  }
+}

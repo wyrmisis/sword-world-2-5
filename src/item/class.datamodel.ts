@@ -46,6 +46,7 @@ class ClassDataModel extends foundry.abstract.TypeDataModel {
       canAllowThrownAttacks: new BooleanField({ initial: false, nullable: false }),
       canAllowMeleeAttacks: new BooleanField({ initial: false, nullable: false }),
       canAllowWrestlingAttacks: new BooleanField({ initial: false, nullable: false }),
+      canAllowGrapplerGear: new BooleanField({ initial: false, nullable: false }),
       // Flags for combat bonuses
       canAddEvasion: new BooleanField({ initial: false, nullable: false }),
       canAddAccuracy: new BooleanField({ initial: false, nullable: false }),
@@ -90,7 +91,9 @@ class ClassDataModel extends foundry.abstract.TypeDataModel {
   }
   get xpToNext() {
     // @ts-expect-error - level exists on the model's schema
-    return this.xpTable.get((this.level || 1) + 1);
+    const result = this.xpTable.get((this.level || 1) + 1);
+    return (result) ? result : 0;
+
   }
   get xpCumulativeCost() {
     let cost = 0;
@@ -136,7 +139,7 @@ class ClassDataModel extends foundry.abstract.TypeDataModel {
       // @ts-expect-error - property exists on the model's schema
       { [WeaponCategory.Crossbow]: this.canAllowShootingAttacks ? crossbowBonus : null },
       // @ts-expect-error - property exists on the model's schema
-      { [WeaponCategory.Gun]: this.canAllowShootingAttacks ? gunBonus : null },
+      { [WeaponCategory.Gun]: (this.canAllowShootingAttacks && this.canAllowBullets) ? gunBonus : null },
     ]
     .filter(i => Object.values(i)[0] !== null)
     .reduce((prev, curr) => ({
