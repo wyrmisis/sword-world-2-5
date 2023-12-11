@@ -10,10 +10,6 @@ import styles from './weapon.sheet.module.css';
  * @todo Add/remove stances
  */
 class WeaponSheet extends ItemSheet {
-  static get customFields () {
-    return ["sw-input, sw-select"].join(", "); 
-  }
-
   get template() {
     // @ts-expect-error - game.system exists in v10+
     return `/systems/${game.system.id}/dist/templates/weapon.sheet.hbs`;
@@ -33,7 +29,7 @@ class WeaponSheet extends ItemSheet {
   getData() {
     const enumToKeyval = (obj: Record<string, string>, key: any, translationKey: string) => ({
       ...obj,
-      [key]: `${translationKey}.${key}` 
+      [key]: `${translationKey}.${key}`
     });
 
     const itemEraToKeyval = (obj: Record<string, string>, key: ItemSourceEra) => enumToKeyval(obj, key, 'SW.equipment.general.era');
@@ -76,9 +72,6 @@ class WeaponSheet extends ItemSheet {
   activateListeners(html: JQuery<HTMLElement>): void {
     super.activateListeners(html);
 
-    html.on("change", WeaponSheet.customFields, (e) => {
-      this._onChangeInput(e)
-    });
     html.on("click", '.add', this.#addNewStance.bind(this));
     html.on("click", '.remove', this.#removeStance.bind(this));
   }
@@ -104,7 +97,7 @@ class WeaponSheet extends ItemSheet {
   #removeStance(e: Event) {
     e.stopPropagation();
     const indexToDrop = parseInt((e.target as HTMLButtonElement).dataset.index || '0');
-    console.info((e.target as HTMLButtonElement).dataset.index , indexToDrop);
+    console.info((e.target as HTMLButtonElement).dataset.index, indexToDrop);
     if (isNaN(indexToDrop))
       return;
     // @ts-expect-error - item.system exists as of v10+

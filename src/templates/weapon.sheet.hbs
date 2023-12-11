@@ -16,13 +16,13 @@
         </div>
       </div>
       <div class="header-field-group">
-        <sw-select name="system.rank" value="{{item.system.rank}}">
+        <select name="system.rank" value="{{item.system.rank}}">
           <span slot="label">{{localize "SW.equipment.general.gearRank.label"}}</span>
           {{selectOptions selectOptions.rank
           selected=item.system.rank
           localize=true
           }}
-        </sw-select>
+        </select>
 
         <div class="sw-checkbox">
           <input type="checkbox" name="system.isMagical" {{checked item.system.isMagical}} />
@@ -119,33 +119,34 @@
 
         {{!-- Rows --}}
         {{#each item.system.stances}}
-        <button type="button" class="remove" data-index="{{@index}}" aria-label="{{localize "
-          SW.equipment.weapons.stances.remove"}}">
+        <button type="button" class="remove" data-index="{{@index}}"
+          aria-label="{{localize 'SW.equipment.weapons.stances.remove'}}">
           <i class="fa-solid fa-xmark"></i>
         </button>
-        <select name="{{concat " system.stances." @index ".stanceType" }}">
+        <select name="{{concat 'system.stances.' @index '.stanceType' }}">
           {{selectOptions @root.selectOptions.stanceType selected=this.stanceType localize=true}}
         </select>
-        <select name="{{concat " system.stances." @index ".damageType" }}">
+        <select name="{{concat 'system.stances.' @index '.damageType' }}">
           {{selectOptions @root.selectOptions.damageType selected=this.damageType localize=true}}
         </select>
-        <select name="{{concat " system.stances." @index ".weaponCategory" }}">
+        <select name="{{concat 'system.stances.' @index '.weaponCategory' }}">
           {{selectOptions @root.selectOptions.weaponCategory selected=this.weaponCategory localize=true}}
         </select>
 
-        <input type="text" value="{{this.minimumStrength}}" name="{{concat " system.stances." @index ".minimumStrength"
-          }}" class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="text" value="{{this.accuracy}}" name="{{concat " system.stances." @index ".accuracy" }}"
+        <input type="text" value="{{this.minimumStrength}}"
+          name="{{concat 'system.stances.' @index '.minimumStrength' }}"
           class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="text" value="{{this.extraDamage}}" name="{{concat " system.stances." @index ".extraDamage" }}"
+        <input type="text" value="{{this.accuracy}}" name="{{concat 'system.stances.' @index '.accuracy' }}"
           class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="text" value="{{this.criticalValue}}" name="{{concat " system.stances." @index ".criticalValue" }}"
+        <input type="text" value="{{this.extraDamage}}" name="{{concat 'system.stances.' @index '.extraDamage' }}"
           class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="text" value="{{this.power}}" name="{{concat " system.stances." @index ".power" }}"
+        <input type="text" value="{{this.criticalValue}}" name="{{concat 'system.stances.' @index '.criticalValue' }}"
           class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
-        <input type="checkbox" name="{{concat " system.stances." @index ".isGrapplerGear" }}"
+        <input type="text" value="{{this.power}}" name="{{concat 'system.stances.' @index '.power' }}"
+          class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" data-dtype="Number" />
+        <input type="checkbox" name="{{concat 'system.stances.' @index '.isGrapplerGear' }}"
           class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" {{checked this.isGrapplerGear}} />
-        <input type="checkbox" name="{{concat " system.stances." @index ".usesAmmunition" }}"
+        <input type="checkbox" name="{{concat 'system.stances.' @index '.usesAmmunition' }}"
           class="{{@root.styles.stance_field}} {{@root.styles.stance_icon_field}}" {{checked this.usesAmmunition}} />
 
         <sw-power-grid class="{{@root.styles.power_grid}}" value="{{this.power}}"
