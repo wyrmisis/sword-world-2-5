@@ -13,10 +13,6 @@ import styles from './class.sheet.module.css';
  * @todo Add "can use Grappler gear"
  */
 class ClassSheet extends ItemSheet {
-  static get customFields () {
-    return ["sw-input", "sw-switch"].join(", "); 
-  }
-
   get template() {
     // @ts-expect-error - game.system exists in v10+
     return `/systems/${game.system.id}/dist/templates/class.sheet.hbs`;
@@ -36,7 +32,7 @@ class ClassSheet extends ItemSheet {
   getData() {
     const enumToKeyval = (obj: Record<string, string>, key: any, translationKey: string) => ({
       ...obj,
-      [key]: `${translationKey}.${key}` 
+      [key]: `${translationKey}.${key}`
     });
 
     const classTypeToKeyval = (obj: Record<string, string>, key: ClassType) => enumToKeyval(obj, key, 'SW.characterOptions.class.classType');
@@ -50,26 +46,16 @@ class ClassSheet extends ItemSheet {
     }
   }
 
-  /*
-   * 
-   * @todo Figure out focus for custom elements
-   * @override 
-   */
-  // async _render(force?: boolean, options?: any) {
-  //   // Identify the focused element
-  //   let focus = document.activeElement;
-  //   // Render the application and restore focus
-  //   await super._render(force, options);
-  //   if ( focus && focus.name ) {
-  //     const input = this.form?.[focus.name];
-  //     if ( input && (input.focus instanceof Function) ) input.focus();
-  //   }
-  // }
-
   activateListeners(html: JQuery<HTMLElement>): void {
     super.activateListeners(html);
 
-    html.on("change", ClassSheet.customFields, this._onChangeInput.bind(this));
+    html.find(".sw-switch").on("click", (e: Event) => {
+      const switchEl = (e.target as HTMLDivElement)
+        ?.closest('.sw-switch')
+        ?.querySelector('[type="checkbox"]') as HTMLInputElement;
+      switchEl.checked = !switchEl.checked;
+      this._onChangeInput.bind(this); ``
+    })
   }
 }
 

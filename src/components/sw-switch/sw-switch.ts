@@ -7,6 +7,9 @@ import BaseComponent from '../base-component';
 // @ts-expect-error - TS doesn't understand importing a CSS file
 import styles from './sw-switch.css' assert { type: "css" };
 
+/**  
+ * @ignore - Until Foundry supports custom element input fields
+ */
 @component('sw-switch')
 export default class SwSwitch extends BaseComponent {
   get value() { return this.checked.toString() }
@@ -27,7 +30,7 @@ export default class SwSwitch extends BaseComponent {
 
   get template() {
     return /* html */ `
-    <input type="checkbox" ${this.checked ? 'checked' : '' } />
+    <input type="checkbox" ${this.checked ? 'checked' : ''} />
     <span class="label label--on"><slot name="on">${SwSwitch.localize("SWComponent.Switch.on")}</slot></span>
     <span class="label label--off"><slot name="off">${SwSwitch.localize("SWComponent.Switch.off")}</slot></span>
     `;
@@ -48,7 +51,7 @@ export default class SwSwitch extends BaseComponent {
   }
 
   events() {
-    this.addEventListener("click", this.#onClick.bind(this));    
+    this.addEventListener("click", this.#onClick.bind(this));
   }
 
   #onClick(e: Event) {

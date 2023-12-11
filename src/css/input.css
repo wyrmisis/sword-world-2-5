@@ -1,0 +1,126 @@
+/* Styles specific to the pairing of an input field and its label */
+.sw-input {
+  display: grid;
+  align-items: center;
+  gap: .25em;
+  grid-template-columns: var(--label-width, fit-content(10em)) 1fr;
+
+  &:has(input:readonly) {
+    grid-template-columns: var(--label-width, fit-content(10em)) fit-content(2em);
+  }
+
+  &:not(:has(label)) {
+    grid-template-columns: 1fr;
+  }
+
+  label {
+    display: block;
+  }
+}
+
+/* Toggle switch styles */
+.sw-switch {
+
+  display: flex;
+  gap: .25em;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-border-light-tertiary);
+  border-radius: .25em;
+  height: calc(var(--form-field-height) + 1px);
+  width: fit-content;
+  padding: 3px;
+
+  &:not(:has(input:is(:disabled, :read-only))) {
+    cursor: pointer;
+  }
+
+  input {
+    display: none;
+  }
+
+  .container {
+    display: flex;
+    gap: .25em;
+  }
+
+  &:has(input:checked) .label--on,
+  &:has(input:not(:checked)) .label--off {
+    background-color: var(--switch-background-active, #000);
+    color: var(--switch-text-active, #fff);
+  }
+
+  &:has(input:checked) .label--off,
+  &:has(input:not(:checked)) .label--on {
+    opacity: .6;
+  }
+
+  .label {
+    border-radius: .25em;
+    padding: 0 .25em;
+  }
+}
+
+.sw-meter {
+  display: flex;
+  gap: .25em;
+  align-items: center;
+
+  input {
+    --input-max-width: var(--meter-field-width, 2.5em);
+  }
+
+  .sw-meter__max {
+    display: inline-block;
+    width: var(--meter-field-width, 2.5em)
+  }
+
+  progress[value] {
+    appearance: none;
+
+    width: 100%;
+    height: 1em;
+
+    border: none;
+
+    ::-webkit-progress-value {
+      background-color: var(--meter-color);
+    }
+  }
+}
+
+:is(.sw-meter, .sw-input) {
+
+  input {
+    box-sizing: border-box;
+    width: calc(100% - 2px);
+    min-width: 2.5em;
+    max-width: var(--input-max-width, auto);
+    height: var(--form-field-height);
+    padding: 1px 3px;
+    margin: 0;
+    color: var(--color-text-dark-primary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    user-select: text;
+    justify-self: end;
+    text-align: inherit;
+
+    &[readonly] {
+      width: auto;
+      min-width: auto;
+    }
+
+    &[disabled] {
+      color: var(--color-text-dark-inactive);
+    }
+
+    &:not([readonly]):not([disabled]) {
+      border-color: var(--color-border-light-tertiary);
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--color-text-dark-primary);
+    }
+  }
+}

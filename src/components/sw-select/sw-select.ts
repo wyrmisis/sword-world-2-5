@@ -7,6 +7,9 @@ import BaseComponent from '../base-component';
 // @ts-expect-error - TS doesn't understand importing a CSS file
 import styles from './sw-select.css' assert { type: "css" };
 
+/**
+ * @ignore - Until Foundry supports custom element input fields
+ */
 @component('sw-select')
 export default class SwSelect extends BaseComponent {
   static formAssociated: boolean = true;
@@ -18,10 +21,8 @@ export default class SwSelect extends BaseComponent {
   get template() {
     return /* html */ `
       <label id="label"><slot name="label"></slot></label>
-      <select aria-labeledby="label" value="${this.value}" ${
-        this.disabled ? 'disabled ' : ''
-      }${
-        this.readonly ? 'readonly ' : ''
+      <select aria-labeledby="label" value="${this.value}" ${this.disabled ? 'disabled ' : ''
+      }${this.readonly ? 'readonly ' : ''
       }>
         <slot></slot>
       </select>
@@ -34,9 +35,9 @@ export default class SwSelect extends BaseComponent {
   }
 
   protected async prepareData(): Promise<void> {
-    
+
   }
-  
+
   observeOptions() {
     if (this.selectElement?.childElementCount) {
       this.selectElement.innerHTML = '';
@@ -58,7 +59,7 @@ export default class SwSelect extends BaseComponent {
   #setUpOptionObserver() {
     const observer = new MutationObserver((mutationsList) => {
       mutationsList.forEach((mutation) => {
-        if(mutation.type == 'childList') {
+        if (mutation.type == 'childList') {
           this.observeOptions();
         }
       });

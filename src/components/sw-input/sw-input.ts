@@ -7,6 +7,9 @@ import BaseComponent from '../base-component';
 // @ts-expect-error - TS doesn't understand importing a CSS file
 import styles from './sw-input.css' assert { type: "css" };
 
+/**
+ * @ignore - Until Foundry supports custom element input fields
+ */
 @component('sw-input')
 export default class SwInput extends BaseComponent {
   static formAssociated: boolean = true;
@@ -24,10 +27,8 @@ export default class SwInput extends BaseComponent {
   get template() {
     return /* html */ `
       <label id="label" class="${!this.#noLabel ? "" : "empty"}"><slot></slot></label>
-      <input ${
-        this.disabled ? 'disabled ' : ''
-      }${
-        this.readonly ? 'readonly ' : ''
+      <input ${this.disabled ? 'disabled ' : ''
+      }${this.readonly ? 'readonly ' : ''
       }type="text" data-dtype="${this.dataset.dtype || "String"}" aria-labeledby="label" value="${this.value}" />
     `;
   }

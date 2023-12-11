@@ -6,31 +6,41 @@
         <input type="text" value="{{item.name}}" name="name">
 
         <div class="sw-select {{styles.field_classType}}">
-          <label for="system.classType">{{localize "SW.characterOptions.class.classType.label"}}</label>
-          <select name="system.classType" id="system.classType">
+          <label for="system.type">{{localize "SW.characterOptions.class.classType.label"}}</label>
+          <select name="system.type" id="system.type">
             {{selectOptions selectOptions.classType
-              selected=item.system.classType
-              localize=true
+            selected=item.system.type
+            localize=true
             }}
           </select>
         </div>
       </div>
       <div class="header-field-group">
-        <sw-input class="{{styles.field_level}}" name="system.level" value={{item.system.level}}>
-          {{localize "SW.characterOptions.class.level.shortLabel"}}
-        </sw-input>
-        <sw-input class="{{styles.field_xp}}" readonly value={{item.system.xpCumulativeCost}}>
-          {{localize "SW.characterOptions.class.level.xpSpent"}}
-        </sw-input>
+        <div class="sw-input {{styles.field_level}}">
+          <label for="system.level">
+            {{localize "SW.characterOptions.class.level.shortLabel"}}
+          </label>
+          <input name="system.level" value={{item.system.level}} />
+        </div>
+        <div class="sw-input {{styles.field_xp}}">
+          <label for="system.xpCumulativeCost">
+            {{localize "SW.characterOptions.class.level.xpSpent"}}
+          </label>
+          <input readonly value={{item.system.xpCumulativeCost}} />
+        </div>
         {{#if item.system.xpToNext}}
-        <sw-input class="{{styles.field_xp}}" readonly value={{item.system.xpToNext}}>
-          {{localize "SW.characterOptions.class.level.xpNext"}}
-        </sw-input>
+        <div class="sw-input {{styles.field_xp}}">
+          <label>
+            {{localize "SW.characterOptions.class.level.xpNext"}}
+          </label>
+          <input readonly value={{item.system.xpToNext}} />
+        </div>
         {{/if}}
-        <sw-switch class="{{styles.field_xpTable}}" name="system.isMajor" {{checked item.system.isMajor}} data-tooltip="XP Table">
-          <span slot="on">Major</span>
-          <span slot="off">Minor</span>
-        </sw-switch>
+        <div class="sw-switch {{styles.field_xpTable}}">
+          <input type="checkbox" name="system.isMajor" {{checked item.system.isMajor}} data-tooltip="XP Table">
+          <span class="label label--on">Major</span>
+          <span class="label label--off">Minor</span>
+        </div>
       </div>
     </div>
   </header>
@@ -49,9 +59,9 @@
     <div class="tab tab--description {{styles.tab_summary}}" data-group="primary" data-tab="summary">
       <main>
         {{editor item.system.description
-          target="system.description"
-          engine="prosemirror"}}
-          {{log this}}
+        target="system.description"
+        engine="prosemirror"}}
+        {{log this}}
       </main>
     </div>
 
@@ -59,161 +69,116 @@
       <div class="{{styles.flag_group}}">
         <div class="{{styles.flag_list}}">
           <h3>{{localize "SW.characterOptions.class.flags.weapons.label"}}</h3>
-          <input
-            name="system.canAllowMeleeAttacks"
-            id="system.canAllowMeleeAttacks"
-            type="checkbox"
-            {{checked item.system.canAllowMeleeAttacks}} />
+          <input name="system.canAllowMeleeAttacks" id="system.canAllowMeleeAttacks" type="checkbox" {{checked
+            item.system.canAllowMeleeAttacks}} />
           <label for="system.canAllowMeleeAttacks">{{
             localize "SW.characterOptions.class.flags.weapons.addsTo"
             key=(localize "SW.characterOptions.class.flags.weapons.melee")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAllowThrownAttacks"
-            id="system.canAllowThrownAttacks"
-            type="checkbox"
-            {{checked item.system.canAllowThrownAttacks}} />
+          <input name="system.canAllowThrownAttacks" id="system.canAllowThrownAttacks" type="checkbox" {{checked
+            item.system.canAllowThrownAttacks}} />
           <label for="system.canAllowThrownAttacks">{{
             localize "SW.characterOptions.class.flags.weapons.addsTo"
             key=(localize "SW.characterOptions.class.flags.weapons.thrown")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAllowWrestlingAttacks"
-            id="system.canAllowWrestlingAttacks"
-            type="checkbox"
-            {{checked item.system.canAllowWrestlingAttacks}} />
+          <input name="system.canAllowWrestlingAttacks" id="system.canAllowWrestlingAttacks" type="checkbox" {{checked
+            item.system.canAllowWrestlingAttacks}} />
           <label for="system.canAllowWrestlingAttacks">{{
             localize "SW.characterOptions.class.flags.weapons.addsTo"
             key=(localize "SW.characterOptions.class.flags.weapons.wrestling")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAllowGrapplerGear"
-            id="system.canAllowGrapplerGear"
-            type="checkbox"
-            {{checked item.system.canAllowGrapplerGear}} />
+          <input name="system.canAllowGrapplerGear" id="system.canAllowGrapplerGear" type="checkbox" {{checked
+            item.system.canAllowGrapplerGear}} />
           <label for="system.canAllowGrapplerGear">{{
             localize "SW.characterOptions.class.flags.weapons.addsTo"
             key=(localize "SW.characterOptions.class.flags.weapons.grappling")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAllowShootingAttacks"
-            id="system.canAllowShootingAttacks"
-            type="checkbox"
-            {{checked item.system.canAllowShootingAttacks}} />
+          <input name="system.canAllowShootingAttacks" id="system.canAllowShootingAttacks" type="checkbox" {{checked
+            item.system.canAllowShootingAttacks}} />
           <label for="system.canAllowShootingAttacks">{{
             localize "SW.characterOptions.class.flags.weapons.addsTo"
             key=(localize "SW.characterOptions.class.flags.weapons.shooting")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAllowBullets"
-            id="system.canAllowBullets"
-            type="checkbox"
-            {{checked item.system.canAllowBullets}} />
+          <input name="system.canAllowBullets" id="system.canAllowBullets" type="checkbox" {{checked
+            item.system.canAllowBullets}} />
           <label for="system.canAllowBullets">{{
             localize "SW.characterOptions.class.flags.weapons.addsTo"
             key=(localize "SW.characterOptions.class.flags.weapons.bullets")
-          }}</label>
+            }}</label>
         </div>
 
         <div class="{{styles.flag_list}}">
           <h3>{{localize "SW.characterOptions.class.flags.combatModifiers.label"}}</h3>
-          <input
-            name="system.canAddEvasion"
-            id="system.canAddEvasion"
-            type="checkbox"
-            {{checked item.system.canAddEvasion}} />
+          <input name="system.canAddEvasion" id="system.canAddEvasion" type="checkbox" {{checked
+            item.system.canAddEvasion}} />
           <label for="system.canAddEvasion">{{
             localize "SW.characterOptions.class.flags.combatModifiers.addsTo"
             key=(localize "SW.characterOptions.class.flags.combatModifiers.evasion")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAddAccuracy"
-            id="system.canAddAccuracy"
-            type="checkbox"
-            {{checked item.system.canAddAccuracy}} />
+          <input name="system.canAddAccuracy" id="system.canAddAccuracy" type="checkbox" {{checked
+            item.system.canAddAccuracy}} />
           <label for="system.canAddAccuracy">{{
             localize "SW.characterOptions.class.flags.combatModifiers.addsTo"
             key=(localize "SW.characterOptions.class.flags.combatModifiers.accuracy")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAddDamage"
-            id="system.canAddDamage"
-            type="checkbox"
-            {{checked item.system.canAddDamage}} />
+          <input name="system.canAddDamage" id="system.canAddDamage" type="checkbox" {{checked
+            item.system.canAddDamage}} />
           <label for="system.canAddDamage">{{
             localize "SW.characterOptions.class.flags.combatModifiers.addsTo"
             key=(localize "SW.characterOptions.class.flags.combatModifiers.damage")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAddInitiative"
-            id="system.canAddInitiative"
-            type="checkbox"
-            {{checked item.system.canAddInitiative}} />
+          <input name="system.canAddInitiative" id="system.canAddInitiative" type="checkbox" {{checked
+            item.system.canAddInitiative}} />
           <label for="system.canAddInitiative">{{
             localize "SW.characterOptions.class.flags.combatModifiers.addsTo"
             key=(localize "SW.characterOptions.class.flags.combatModifiers.initiative")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAddMonsterKnowledge"
-            id="system.canAddMonsterKnowledge"
-            type="checkbox"
-            {{checked item.system.canAddMonsterKnowledge}} />
+          <input name="system.canAddMonsterKnowledge" id="system.canAddMonsterKnowledge" type="checkbox" {{checked
+            item.system.canAddMonsterKnowledge}} />
           <label for="system.canAddMonsterKnowledge">{{
             localize "SW.characterOptions.class.flags.combatModifiers.addsTo"
             key=(localize "SW.characterOptions.class.flags.combatModifiers.monsterKnowledge")
-          }}</label>
+            }}</label>
         </div>
 
         <div class="{{styles.flag_list}}">
           <h3>{{localize "SW.characterOptions.class.flags.skillPackages.label"}}</h3>
-          <input
-            name="system.canAddTechniqueSkillPoints"
-            id="system.canAddTechniqueSkillPoints"
-            type="checkbox"
+          <input name="system.canAddTechniqueSkillPoints" id="system.canAddTechniqueSkillPoints" type="checkbox"
             {{checked item.system.canAddTechniqueSkillPoints}} />
           <label for="system.canAddTechniqueSkillPoints">{{
             localize "SW.characterOptions.class.flags.skillPackages.addsTo"
             key=(localize "SW.characterOptions.class.flags.skillPackages.technique")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAddMovementSkillPoints"
-            id="system.canAddMovementSkillPoints"
-            type="checkbox"
-            {{checked item.system.canAddMovementSkillPoints}} />
+          <input name="system.canAddMovementSkillPoints" id="system.canAddMovementSkillPoints" type="checkbox" {{checked
+            item.system.canAddMovementSkillPoints}} />
           <label for="system.canAddMovementSkillPoints">{{
             localize "SW.characterOptions.class.flags.skillPackages.addsTo"
             key=(localize "SW.characterOptions.class.flags.skillPackages.movement")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAddObservationSkillPoints"
-            id="system.canAddObservationSkillPoints"
-            type="checkbox"
+          <input name="system.canAddObservationSkillPoints" id="system.canAddObservationSkillPoints" type="checkbox"
             {{checked item.system.canAddObservationSkillPoints}} />
           <label for="system.canAddObservationSkillPoints">{{
             localize "SW.characterOptions.class.flags.skillPackages.addsTo"
             key=(localize "SW.characterOptions.class.flags.skillPackages.observation")
-          }}</label>
+            }}</label>
 
-          <input
-            name="system.canAddKnowledgeSkillPoints"
-            id="system.canAddKnowledgeSkillPoints"
-            type="checkbox"
+          <input name="system.canAddKnowledgeSkillPoints" id="system.canAddKnowledgeSkillPoints" type="checkbox"
             {{checked item.system.canAddKnowledgeSkillPoints}} />
           <label for="system.canAddKnowledgeSkillPoints">{{
             localize "SW.characterOptions.class.flags.skillPackages.addsTo"
             key=(localize "SW.characterOptions.class.flags.skillPackages.knowledge")
-          }}</label>
+            }}</label>
         </div>
       </div>
     </div>

@@ -12,35 +12,67 @@
       </div>
 
       <div class="header-field-block">
-        <sw-meter name="system.hp.value" value="{{actor.system.hp.value}}" max="{{actor.system.hp.max}}">
-          {{localize "SWSheets.character.HP"}}
-        </sw-meter>
+        <div class="sw-meter">
 
-        <sw-meter name="system.mp.value" value="{{actor.system.mp.value}}" max="{{actor.system.mp.max}}">
-          {{localize "SWSheets.character.MP"}}
-        </sw-meter>
+          {{#with actor.system.hp}}
+          <label for="system.hp.value">{{localize "SWSheets.character.HP"}}</label>
+          <input data-dtype="Number" name="system.hp.value" value="{{value}}" />
+          <span class="sw-meter__max">{{max}}</span>
+          <progress class="sw-meter__bar" value="{{value}}" max="{{max}}" />
+          {{/with}}
+        </div>
+
+        <div class="sw-meter">
+          {{#with actor.system.mp}}
+          <label for="system.mp.value">{{localize "SWSheets.character.MP"}}</label>
+          <input data-dtype="Number" name="system.mp.value" value="{{value}}" />
+          <span class="sw-meter__max">{{max}}</span>
+          <progress class="sw-meter__bar" value="{{value}}" max="{{max}}" />
+          {{/with}}
+        </div>
       </div>
 
       <div class="header-field-block">
         <h3 class="label">{{localize "SWSheets.character.defenses.label"}}</h3>
-        <sw-input readonly data-dtype="Number" value="{{actor.system.evasion}}">{{localize "SWSheets.character.defenses.evasion"}}</sw-input>
-        <sw-input readonly data-dtype="Number" value="{{actor.system.defense}}">{{localize "SWSheets.character.defenses.defense"}}</sw-input>
-        <sw-input readonly data-dtype="Number" value="{{actor.system.fortitude}}">{{localize "SWSheets.character.defenses.fortitude"}}</sw-input>
-        <sw-input readonly data-dtype="Number" value="{{actor.system.willpower}}">{{localize "SWSheets.character.defenses.willpower"}}</sw-input>
+        <div class="sw-input">
+          <label>{{localize "SWSheets.character.defenses.evasion"}}</label>
+          <input readonly data-dtype="Number" value="{{actor.system.evasion}}" />
+        </div>
+        <div class="sw-input">
+          <label>{{localize "SWSheets.character.defenses.defense"}}</label>
+          <input readonly data-dtype="Number" value="{{actor.system.defense}}" />
+        </div>
+        <div class="sw-input">
+          <label>{{localize "SWSheets.character.defenses.fortitude"}}</label>
+          <input readonly data-dtype="Number" value="{{actor.system.fortitude}}" />
+        </div>
+        <div class="sw-input">
+          <label>{{localize "SWSheets.character.defenses.willpower"}}</label>
+          <input readonly data-dtype="Number" value="{{actor.system.willpower}}" />
+        </div>
       </div>
 
       <div class="header-field-block">
         <h3 class="label">{{localize "SWSheets.character.movement.label"}}</h3>
-        <sw-input readonly data-dtype="Number" value="{{actor.system.movement.limited}}">{{localize "SWSheets.character.movement.limited"}}</sw-input>
-        <sw-input readonly data-dtype="Number" value="{{actor.system.movement.normal}}">{{localize "SWSheets.character.movement.normal"}}</sw-input>
-        <sw-input readonly data-dtype="Number" value="{{actor.system.movement.full}}">{{localize "SWSheets.character.movement.full"}}</sw-input>
+        <div class="sw-input">
+          <label>{{localize "SWSheets.character.movement.limited"}}</label>
+          <input readonly data-dtype="Number" value="{{actor.system.movement.limited}}" />
+        </div>
+        <div class="sw-input">
+          <label>{{localize "SWSheets.character.movement.normal"}}</label>
+          <input readonly data-dtype="Number" value="{{actor.system.movement.normal}}" />
+        </div>
+        <div class="sw-input">
+          <label>{{localize "SWSheets.character.movement.full"}}</label>
+          <input readonly data-dtype="Number" value="{{actor.system.movement.full}}" />
+        </div>
       </div>
     </section>
   </header>
 
   <nav class="">
   </nav>
-  
+
   <main class="sheet-body">
     <h2>Classes</h2>
     <ul>
@@ -52,12 +84,12 @@
     <div class="inventory">
       <h2>Weapons</h2>
       {{#each actor.system.weapons}}
-        <sw-weapon-card uuid="{{uuid}}"></sw-weapon-card>
+      <sw-weapon-card uuid="{{uuid}}"></sw-weapon-card>
       {{/each}}
 
       <h2>Armor</h2>
       {{#each actor.system.armor}}
-        <sw-armor-card></sw-armor-card>
+      <sw-armor-card></sw-armor-card>
       {{/each}}
     </div>
 

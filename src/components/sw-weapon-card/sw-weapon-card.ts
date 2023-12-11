@@ -20,14 +20,14 @@ export default class SwWeaponCard extends BaseComponent {
    * @todo Implement!
    */
   get contextMenuSettings() {
-    return [{ 
+    return [{
       name: 'Share in Chat',
-      icon: '<i class="fa fa-eye"></i>', 
+      icon: '<i class="fa fa-eye"></i>',
       callback: () => {
         this.#onShare();
       }
     },
-    { 
+    {
       name: 'Edit',
       icon: '<i class="fa fa-edit"></i>',
       callback: () => {
@@ -36,7 +36,7 @@ export default class SwWeaponCard extends BaseComponent {
     },
     {
       name: 'Delete',
-      icon: '<i class="fa fa-trash"></i>', 
+      icon: '<i class="fa fa-trash"></i>',
       condition: () => {
         return !!this.item?.isOwner;
       },
@@ -56,7 +56,7 @@ export default class SwWeaponCard extends BaseComponent {
 
   protected async prepareData() {
     if (this.hasAttribute('uuid'))
-      this.item = await fromUuid(this.getAttribute('uuid') as string) as Item; 
+      this.item = await fromUuid(this.getAttribute('uuid') as string) as Item;
   }
 
   /**
@@ -76,7 +76,7 @@ export default class SwWeaponCard extends BaseComponent {
       `
       : /* html */ `
         <p class="empty">${SwWeaponCard.localize('SW.equipment.weapons.empty')}</p>
-      ` 
+      `
 
     const rankTag = this.#toTag(
       SwWeaponCard.format("SW.equipment.general.gearRank.ofRank", {
@@ -88,8 +88,8 @@ export default class SwWeaponCard extends BaseComponent {
 
     // @ts-expect-error - Item.system exists
     const categoryTags = this.item.system.weaponCategories.map((category: string) =>
-        SwWeaponCard.localize(`SW.equipment.weapon.weaponCategory.${category}`)
-      )
+      SwWeaponCard.localize(`SW.equipment.weapon.weaponCategory.${category}`)
+    )
       .map((category: string) => this.#toTag(category, true))
       .join('');
 
@@ -102,13 +102,16 @@ export default class SwWeaponCard extends BaseComponent {
 
       ${rankTag}
       ${categoryTags}
-      
-      <sw-select slot="controls" class="class-selector">
-        <span slot="label">As...</span>
-        ${this.#attackingClassList.map( (cls: Item) => /* html */ `
-          <option value="${cls.id}"${cls.id !== this.item.system.attackingClassId ? '' : ' selected'}>${cls.name}</option>
-        `).join('')}
-      </sw-select>
+
+      <div slot="controls" class="class-selector">
+        <label for="${this.item.uuid}-attacking-class">As...</label>
+
+        <select name="${this.item.uuid}-attacking-class">
+          ${this.#attackingClassList.map((cls: Item) => /* html */ `
+            <option value="${cls.id}"${cls.id !== this.item.system.attackingClassId ? '' : ' selected'}>${cls.name}</option>
+          `).join('')}
+        </select>
+      </div>
       
       ${this.#controls}
 
@@ -126,7 +129,7 @@ export default class SwWeaponCard extends BaseComponent {
       ?.addEventListener('click', this.#onEdit.bind(this));
     this.shadowRoot.querySelector('.delete')
       ?.addEventListener('click', this.#onDelete.bind(this));
-    this.shadowRoot.querySelector('.class-selector')
+    this.shadowRoot.querySelector('.class-selector select')
       ?.addEventListener('change', this.#setAttackingClass.bind(this));
 
     // @todo How can I get this repositioned to start from the header?
@@ -211,7 +214,7 @@ export default class SwWeaponCard extends BaseComponent {
     const damageModifier = SwWeaponCard.format('SW.equipment.weapon.plusDamage', {
       amount: s.modifiers?.extraDamage
     })
-    
+
     return /* html */ `
       <li class="stance">
         <span class="stance-name">${stanceName}</span>
