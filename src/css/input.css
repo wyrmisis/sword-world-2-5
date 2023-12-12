@@ -118,9 +118,88 @@
     }
 
     &:not([readonly]):not([disabled]) {
-      border-color: var(--color-border-light-tertiary);
-      background: rgba(0, 0, 0, 0.05);
       color: var(--color-text-dark-primary);
     }
+  }
+}
+
+.sw-select {
+  display: block;
+
+  label {
+    display: block;
+  }
+}
+
+.sw-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+/* Styles for adding a flourish to the above input types */
+.flourished {
+
+  font-size: 1em;
+
+  --flourish-offset-x: 4px;
+  --flourish-offset-y: -7px;
+
+  display: grid;
+  gap: 0;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "field"
+    "label";
+
+  label,
+  .flourished-input {
+    padding: 0 15px;
+  }
+
+  label {
+    grid-area: label;
+    font-size: .7em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .flourished-input {
+    grid-area: field;
+    position: relative;
+
+    &:before,
+    &:after {
+      content: url('assets/flourish.svg');
+      /* Replace with the desired character or SVG data URI */
+      position: absolute;
+      bottom: var(--flourish-offset-y);
+      /* Adjust the position to align with the bottom border */
+      font-size: 1em;
+      /* Scales with the font-size of the parent */
+    }
+
+    &:before {
+      left: var(--flourish-offset-x);
+    }
+
+    &:after {
+      right: var(--flourish-offset-x);
+      transform: scaleX(-100%)
+    }
+  }
+
+  :is(input, select) {
+
+    border: none;
+    border-bottom: 1px solid #000;
+    /* Thin bottom border */
+    font-size: 1em;
+    padding: 0;
+    height: auto;
+    line-height: 1em;
+    /* Use em to scale with container's font size */
+    outline: none;
+    /* Optional: Removes the default focus outline */
+    background: transparent;
   }
 }

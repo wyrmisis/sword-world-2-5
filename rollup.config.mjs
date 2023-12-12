@@ -16,7 +16,7 @@ import postcssImport from 'postcss-import';
 // component module rollup plugins
 import cssImports from "rollup-plugin-import-css";
 
-const staticFileFolders = ["lang", "packs"];
+const staticFileFolders = ["lang", "packs", "assets"];
 
 /**
  * Rollup injects an environment variable if watch mode is used.
@@ -78,5 +78,5 @@ export default defineConfig([
       isWatchMode && livereload(livereloadConfig),
     ],
   }
-  
+
 ]);
