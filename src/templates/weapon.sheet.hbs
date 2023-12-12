@@ -4,25 +4,47 @@
     <div class="header-fields">
       <div class="header-field-group">
 
-        <input type="text" value="{{item.name}}" name="name">
-        <div class="sw-input">
-          <label for="system.quantity">Qty</label>
-          <input class="{{styles.field_quantity}}" type="text" data-dtype="Number" value="{{item.system.quantity}}"
-            name="system.quantity">
+        <div class="sw-input flourished {{styles.field_name}}">
+          <label for="name">{{localize "SW.equipment.general.name"}}</label>
+          <div class="flourished-input">
+            <input type="text" value="{{item.name}}" name="name" />
+          </div>
         </div>
-        <div class="sw-input">
+        <div class="sw-input flourished {{styles.field_quantity}}">
+          <label for="system.quantity">{{localize "SW.equipment.general.quantity.short"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.quantity}}" name="system.quantity">
+          </div>
+        </div>
+        <div class="sw-input flourished {{styles.field_price}}">
           <label for="system.price">{{localize "SW.equipment.general.price"}}</label>
-          <input type="text" data-dtype="Number" value="{{item.system.price}}" name="system.price" />
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.price}}" name="system.price" />
+          </div>
         </div>
+
+
+        <div class="sw-input flourished {{styles.field_popularity}}">
+          <label for=" system.popularity" data-tooltip="{{localize 'SW.equipment.general.popularity.long'}}">{{localize
+            "SW.equipment.general.popularity.short"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.popularity}}" name="system.popularity" />
+          </div>
+        </div>
+
       </div>
       <div class="header-field-group">
-        <select name="system.rank" value="{{item.system.rank}}">
-          <span slot="label">{{localize "SW.equipment.general.gearRank.label"}}</span>
-          {{selectOptions selectOptions.rank
-          selected=item.system.rank
-          localize=true
-          }}
-        </select>
+        <div class="sw-select flourished {{styles.field_rank}}">
+          <label for="system.rank">{{localize "SW.equipment.general.gearRank.label"}}</label>
+          <div class="flourished-input">
+            <select name="system.rank" value="{{item.system.rank}}">
+              {{selectOptions selectOptions.rank
+              selected=item.system.rank
+              localize=true
+              }}
+            </select>
+          </div>
+        </div>
 
         <div class="sw-checkbox">
           <input type="checkbox" name="system.isMagical" {{checked item.system.isMagical}} />
@@ -34,18 +56,27 @@
           <label for="system.isSilvered">{{localize "SW.equipment.weapon.isSilvered"}}</label>
         </div>
 
+        {{#if item.system.usesAmmunition}}
+        <div class="sw-input flourished {{styles.field_ammunition}}"">
+          <label for=" system.ammunition" data-tooltip="{{localize 'SW.equipment.general.popularity.long'}}">{{localize
+          "SW.equipment.weapon.ammunition"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="String" value="{{item.system.ammunition}}" name="system.ammunition" />
+          </div>
+        </div>
+        {{/if}}
 
-        <label for="system.era">{{localize "SW.equipment.general.era.label"}}</label>
-        <select class="{{styles.field_era}}" name="system.era" value="{{item.system.era}}">
-          {{selectOptions selectOptions.era
-          selected=item.system.era
-          localize=true
-          }}
-        </select>
-
-        <label for="system.popularity">{{localize "SW.equipment.general.popularity"}}</label>
-        <input class="{{styles.field_popularity}}" type="text" data-dtype="Number" value="{{item.system.popularity}}"
-          name="system.popularity" />
+        <div class="sw-select flourished {{styles.field_era}}">
+          <label for="system.era">{{localize "SW.equipment.general.era.label"}}</label>
+          <div class="flourished-input">
+            <select name="system.era" value="{{item.system.era}}">
+              {{selectOptions selectOptions.era
+              selected=item.system.era
+              localize=true
+              }}
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -88,8 +119,8 @@
         <span data-tooltip="SW.equipment.weapon.weaponCategory.label">
           {{localize "SW.equipment.weapon.weaponCategory.label"}}
         </span>
-        <span data-tooltip="SW.equipment.general.minimumStrength" class="{{styles.stance_icon_field}}">
-          <span class="sr-only">{{localize "SW.equipment.general.minimumStrength"}}</span>
+        <span data-tooltip="SW.equipment.general.minimumStrength.long" class="{{styles.stance_icon_field}}">
+          <span class="sr-only">{{localize "SW.equipment.general.minimumStrength.long"}}</span>
           <i class="fa-solid fa-dumbbell"></i>
         </span>
         <span data-tooltip="SW.equipment.weapon.accuracyBonus" class="{{styles.stance_icon_field}}">

@@ -29,7 +29,7 @@ export default class WeaponStance {
   power: number;
   powerTable: Map<number, number | null> | undefined;
   minimumStrength: number;
-  
+
   weaponCategory: WeaponCategory;
   range: StanceRange;
   isGrapplerGear: boolean;
@@ -53,7 +53,7 @@ export default class WeaponStance {
    * @param category - The WeaponCategories that apply to this weapon
    * @param actor - The ActorEntity that represents this item's parent. Used for determining this stance's total accuracy and damage
    */
-  constructor (
+  constructor(
     {
       stanceType,
       damageType,
@@ -73,7 +73,7 @@ export default class WeaponStance {
     this.stanceType = stanceType;
     this.damageType = damageType;
     this.power = power;
-    this.powerTable = powerTable.get(power) as Map<number, number|null>;
+    this.powerTable = powerTable.get(power) as Map<number, number | null>;
     this.minimumStrength = minimumStrength;
 
     this.accuracy = accuracy;
@@ -82,10 +82,10 @@ export default class WeaponStance {
     this.extraDamage = extraDamage;
     // @ts-expect-error - we're building the class item's extra damage object kinda weird
     this.#classExtraDamage = classItem?.extraDamage?.[weaponCategory] || 0;
-    
+
     this.criticalValue = criticalValue;
     this.#actorCriticalValueModifier = (actor?.criticalValueModifier || 0);
-    
+
     this.range = range;
     this.usesAmmunition = usesAmmunition;
 
@@ -112,7 +112,7 @@ export default class WeaponStance {
     // specific gear
     if (this.isGrapplerGear && !this.#classCanUseGrapplerGear)
       return false;
-    
+
     return true;
   }
 
@@ -131,7 +131,7 @@ export default class WeaponStance {
    * @returns 
    */
   async rollAccuracy(bonus: number) {
-    const terms = !bonus 
+    const terms = !bonus
       ? `2d6+${this.modifiers.accuracy}`
       : `2d6+${this.modifiers.accuracy}+${bonus}`
     const roll = await new Roll(terms).evaluate();

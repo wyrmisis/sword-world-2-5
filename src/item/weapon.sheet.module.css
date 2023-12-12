@@ -1,18 +1,3 @@
-:global {
-  .sw-select {
-    display: block;
-    
-    label {
-      display: block;
-    }
-  }
-
-  .sw-checkbox {
-    display: flex;
-    align-items: center;
-  }
-}
-
 .sheet_form {
   flex-direction: column;
   display: flex;
@@ -29,10 +14,21 @@
   gap: .25em;
 }
 
+
+
+.field_name {
+  flex: 1;
+}
+
 .field_quantity,
-.field_popularity {
-  --input-max-width: 2.5em;
+.field_popularity,
+.field_rank {
+  --input-max-width: 2ch;
   text-align: center;
+}
+
+.field_price {
+  max-width: 14ch;
 }
 
 .field_era {
@@ -46,9 +42,7 @@
   padding: 0;
   display: grid;
   align-items: center;
-  grid-template-columns: fit-content(var(--icon-column-width))
-                          repeat(3, fit-content(100px))
-                          repeat(7, fit-content(var(--icon-column-width)));
+  grid-template-columns: fit-content(var(--icon-column-width)) repeat(3, fit-content(100px)) repeat(7, fit-content(var(--icon-column-width)));
   gap: .25em;
 
   span:nth-of-type(-n+10) {
@@ -59,7 +53,7 @@
     max-width: var(--icon-column-width);
     text-align: center;
   }
-  
+
   button {
     margin: 0;
     padding: 0;
@@ -83,5 +77,3 @@
   display: flex;
   flex-direction: column;
 }
-
-

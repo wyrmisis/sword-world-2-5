@@ -25,7 +25,7 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
     const stances = new ArrayField(
       new SchemaField({
         stanceType: new NumberField({
-          initial: WeaponStanceType.OneHand, 
+          initial: WeaponStanceType.OneHand,
           choices: Object.values(WeaponStanceType)
         }),
         damageType: new StringField({
@@ -123,7 +123,7 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
         required: true,
         initial: GearRank.B,
         choices: Object.values(GearRank)
-      }), 
+      }),
       popularity: new NumberField({
         nullable: false,
         min: 2,
@@ -138,7 +138,8 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
       isEquipped: new BooleanField({
         initial: false
       }),
-      attackingClassId: new StringField()
+      attackingClassId: new StringField(),
+      ammunition: new StringField()
     }
   }
 
@@ -150,7 +151,7 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
   get attackingClassOptions() {
     if (!this.#actor) return [];
     if (!this.weaponCategories.length) return [];
-    
+
     return this.#actor.system.classes.filter((cls: Item) =>
       this.weaponCategories.some(
         // @ts-expect-error - cls.system exists
@@ -169,7 +170,7 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
   get canBeUsed() {
     if (!this.#actor) return false;
     if (!this.attackingClass) return false;
-  
+
     //@ts-expect-error - this.stances exists on the schema
     const hasAvailableStance = this.stances
       .some((s: WeaponStance) => s.canBeUsed);
@@ -188,6 +189,12 @@ class WeaponDataModel extends foundry.abstract.TypeDataModel {
       return [];
     //@ts-expect-error - this.stances exists on the schema
     return [...new Set(this.stances.map((s: StanceSchema) => s.weaponCategory))]
+  }
+
+  get usesAmmunition() {
+    if (!this.stances.length)
+      return false;
+    return this.stances.some((s: StanceSchema) => s.usesAmmunition)
   }
 }
 

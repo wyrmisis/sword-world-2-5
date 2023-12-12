@@ -2,15 +2,25 @@
 	"SW": {
 		"equipment": {
 			"general": {
+				"name": "Name",
 				"navigation": {
 					"summary": "Summary",
 					"description": "Description",
 					"effects": "Active Effects"
 				},
-				"popularity": "Popularity",
-				"quantity": "Quantity",
+				"popularity": {
+					"short": "Pop.",
+					"long": "Popularity"
+				},
+				"quantity": {
+					"short": "Qty.",
+					"long": "Quantity"
+				},
 				"price": "Price",
-				"minimumStrength": "Minimum Strength",
+				"minimumStrength": {
+					"short": "Str.",
+					"long": "Minimum Strength"
+				},
 				"power": "Power",
 				"era": {
 					"label": "Era",
@@ -75,6 +85,7 @@
 				"plusDamage": "+ {amount} damage",
 				"isGrapplerGear": "Is Grappler gear",
 				"usesAmmunition": "Uses Ammunition",
+				"ammunition": "Ammunition",
 				"isMagical": "Magical",
 				"isSilvered": "Silvered"
 			}
