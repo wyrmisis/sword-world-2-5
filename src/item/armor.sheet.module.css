@@ -1,0 +1,43 @@
+.sheet_form {
+  flex-direction: column;
+  display: flex;
+}
+
+.header_subfields {
+  display: flex;
+}
+
+.sheet_body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: .25em;
+}
+
+.field_name {
+  flex: 1;
+}
+
+.field_minimumStrength,
+.field_defense,
+.field_evasion,
+.field_quantity,
+.field_popularity,
+.field_rank {
+  --input-max-width: 2ch;
+  text-align: center;
+}
+
+.field_price {
+  max-width: 14ch;
+}
+
+.field_era {
+  margin-left: auto;
+}
+
+.description {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

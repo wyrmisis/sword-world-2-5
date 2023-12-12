@@ -21,6 +21,11 @@ class ArmorDataModel extends foundry.abstract.TypeDataModel {
         min: 0,
         initial: 0,
       }),
+      quantity: new NumberField({
+        nullable: false,
+        initial: 1,
+        min: 0
+      }),
       evasion: new NumberField({
         nullable: false,
         initial: 0,

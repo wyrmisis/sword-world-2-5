@@ -1,0 +1,126 @@
+<form autocomplete="off" class="{{cssClass}} flexcol">
+  <header class="sheet-header">
+    <img src="{{item.img}}" data-edit="img" />
+
+    <div class="header-fields">
+
+      <div class="header-field-group">
+        <div class="sw-input flourished {{styles.field_name}}">
+          <label for="name">{{localize "SW.equipment.general.name"}}</label>
+          <div class="flourished-input">
+            <input type="text" value="{{item.name}}" name="name" />
+          </div>
+        </div>
+        <div class="sw-input flourished {{styles.field_quantity}}">
+          <label for="system.quantity">{{localize "SW.equipment.general.quantity.short"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.quantity}}" name="system.quantity">
+          </div>
+        </div>
+        <div class="sw-input flourished {{styles.field_price}}">
+          <label for="system.price">{{localize "SW.equipment.general.price"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.price}}" name="system.price" />
+          </div>
+        </div>
+
+
+        <div class="sw-input flourished {{styles.field_popularity}}">
+          <label for=" system.popularity" data-tooltip="{{localize 'SW.equipment.general.popularity.long'}}">{{localize
+            "SW.equipment.general.popularity.short"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.popularity}}" name="system.popularity" />
+          </div>
+        </div>
+      </div>
+
+      <div class="header-field-group">
+        <div class="sw-select flourished {{styles.field_rank}}">
+          <label for="system.rank">{{localize "SW.equipment.general.gearRank.label"}}</label>
+          <div class="flourished-input">
+            <select name="system.rank" value="{{item.system.rank}}">
+              {{selectOptions selectOptions.rank
+              selected=item.system.rank
+              localize=true
+              }}
+            </select>
+          </div>
+        </div>
+
+        <div class="sw-select flourished">
+          <label for="system.category">{{localize "SW.equipment.armor.category.label"}}</label>
+          <div class="flourished-input">
+            <select name="system.category" value="{{item.system.category}}">
+              {{selectOptions selectOptions.category
+              selected=item.system.category
+              localize=true
+              }}
+            </select>
+          </div>
+        </div>
+
+        <div class="sw-input flourished {{styles.field_defense}}">
+          <label for="system.defense" data-tooltip="{{localize 'SW.equipment.armor.defense.long'}}">{{localize
+            "SW.equipment.armor.defense.short"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.defense}}" name="system.defense" />
+          </div>
+        </div>
+
+        <div class="sw-input flourished {{styles.field_evasion}}">
+          <label for="system.evasion" data-tooltip="{{localize 'SW.equipment.armor.evasion.long'}}">{{localize
+            "SW.equipment.armor.evasion.short"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.evasion}}" name="system.evasion" />
+          </div>
+        </div>
+
+        <div class="sw-input flourished {{styles.field_minimumStrength}}">
+          <label for="system.minimumStrength"
+            data-tooltip="{{localize 'SW.equipment.general.minimumStrength.long'}}">{{localize
+            "SW.equipment.general.minimumStrength.short"}}</label>
+          <div class="flourished-input">
+            <input type="text" data-dtype="Number" value="{{item.system.minimumStrength}}"
+              name="system.minimumStrength" />
+          </div>
+        </div>
+
+
+        <div class="sw-select flourished {{styles.field_era}}">
+          <label for="system.era">{{localize "SW.equipment.general.era.label"}}</label>
+          <div class="flourished-input">
+            <select name="system.era" value="{{item.system.era}}">
+              {{selectOptions selectOptions.era
+              selected=item.system.era
+              localize=true
+              }}
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">
+      {{localize "SW.equipment.general.navigation.description"}}
+    </a>
+    <a class="item" data-tab="effects">
+      {{localize "SW.equipment.general.navigation.effects"}}
+    </a>
+  </nav>
+  <section class="sheet-body {{styles.sheet_body}}">
+    {{!-- Description tab --}}
+    <div class="tab tab--description {{styles.tab_description}}" data-group="primary" data-tab="description">
+      <main>
+        {{editor item.system.description
+        target="system.description"
+        engine="prosemirror"}}
+      </main>
+    </div>
+
+    <div class="tab {{styles.tab_effects}}" data-group="primary" data-tab="effects">
+      Active Effects
+    </div>
+    </main>
+</form>

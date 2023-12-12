@@ -40,6 +40,22 @@
 					"3": "SS"
 				}
 			},
+			"armor": {
+				"category": {
+					"label": "Category",
+					"metal": "Metal",
+					"nonmetal": "Nonmetal",
+					"shield": "Shield"
+				},
+				"defense": {
+					"short": "Def.",
+					"long": "Defense"
+				},
+				"evasion": {
+					"short": "Eva.",
+					"long": "Evasion"
+				}
+			},
 			"weapon": {
 				"navigation": {
 					"stances": "Weapon Stances"
@@ -154,7 +170,6 @@
 			}
 		}
 	},
-
 	"SWSheets": {
 		"character": {
 			"HP": "HP",
@@ -174,7 +189,6 @@
 			}
 		}
 	},
-
 	"SWComponent": {
 		"ArmorCard": {},
 		"WeaponCard": {
@@ -192,7 +206,6 @@
 			"value": "Effect Value"
 		}
 	},
-
 	"TYPES": {
 		"Actor": {
 			"character": "Character",

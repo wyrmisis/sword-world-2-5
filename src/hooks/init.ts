@@ -16,7 +16,7 @@ import CharacterSheet from '../actor/character.sheet';
 import WeaponDataModel from '../item/weapon.datamodel';
 import WeaponSheet from '../item/weapon.sheet';
 import ArmorDataModel from '../item/armor.datamodel';
-// import ArmorSheet from '../item/armor.sheet';
+import ArmorSheet from '../item/armor.sheet';
 import AccessoryDataModel from '../item/accessory.datamodel';
 // import AccessorySheet from '../item/accessory.sheet';
 import ConsumableDataModel from '../item/consumable.datamodel';
@@ -78,13 +78,13 @@ Hooks.on('init', () => {
     accessory: AccessoryDataModel,
     consumable: ConsumableDataModel,
     item: ItemDataModel,
-  //   race: RaceDataModel,
+    //   race: RaceDataModel,
     class: ClassDataModel,
-  //   skill: SkillDataModel,
-  //   feat: FeatDataModel,
-  //   spell: SpellDataModel,
-  //   monstersection: MonsterSectionDataModel,
-  //   monsterskill: MonsterSkillDataModel
+    //   skill: SkillDataModel,
+    //   feat: FeatDataModel,
+    //   spell: SpellDataModel,
+    //   monstersection: MonsterSectionDataModel,
+    //   monsterskill: MonsterSkillDataModel
   };
 
   // Actor sheets
@@ -108,11 +108,11 @@ Hooks.on('init', () => {
     makeDefault: true,
     label: "SW.SheetItem",
   });
-  // Items.registerSheet(id, ArmorSheet, {
-  //   types: ["armor"],
-  //   makeDefault: true,
-  //   label: "SW.SheetItem",
-  // });
+  Items.registerSheet(id, ArmorSheet, {
+    types: ["armor"],
+    makeDefault: true,
+    label: "SW.SheetItem",
+  });
   // Items.registerSheet(id, AccessorySheet, {
   //   types: ["accessory"],
   //   makeDefault: true,
