@@ -9,7 +9,7 @@ import BaseComponent from '../base-component';
 import styles from './sw-weapon-card.css' assert { type: "css" };
 
 import { dom, icon } from "@fortawesome/fontawesome-svg-core";
-import { faEye, faScroll, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faScroll, faTrash, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import SwSelect from '../sw-select/sw-select';
 
 @component('sw-weapon-card')
@@ -211,25 +211,16 @@ export default class SwWeaponCard extends BaseComponent {
    */
   #stanceTemplate = (s: any) => {
     const stanceName = SwWeaponCard.localize(`SW.equipment.weapon.stanceType.${s.stanceType}`)
-    const damageModifier = SwWeaponCard.format('SW.equipment.weapon.plusDamage', {
-      amount: s.modifiers?.extraDamage
-    })
 
     return /* html */ `
       <li class="stance">
-        <span class="stance-name">${stanceName}</span>
         <span class="stance-tags">
-          <sw-tag>Tag One</sw-tag>
-          <sw-tag>Tag Two</sw-tag>
-          <sw-tag>Tag Three</sw-tag>
+          <sw-tag>${stanceName}</sw-tag>
+          <sw-tag>${icon(faCrosshairs).html} ${s.minimumStrength}</sw-tag>
+          <sw-tag>${s.modifiers.accuracy}</sw-tag>
           <sw-tag>Tag Four</sw-tag>
         </span>
-        <span class="min-strength">${s.minimumStrength}</span>
-        <span class="accuracy">${s.modifiers.accuracy}</span>
-        <span class="power">
-          <span class="power-value">${s.power}</span>
-          ${s.extraDamage ? `<span class="extra-damage">${damageModifier}</span>` : ``}
-        </span>
+        <sw-power-grid value="${s.power}" bonus="${s.modifiers?.extraDamage}" critical="${s.criticalValue}"></sw-power-grid>
       </li>
       `
   }
