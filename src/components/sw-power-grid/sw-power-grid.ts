@@ -27,9 +27,9 @@ export default class SwPowerGrid extends BaseComponent {
     return /* html */ `
       ${this.#labels}
       ${[...this.#map.entries()].map(
-        ([diceValue, powerValue]) =>
-          this.#buildPowerEntry(diceValue as number, powerValue as number)
-      ).join('')}
+      ([diceValue, powerValue]) =>
+        this.#buildPowerEntry(diceValue as number, powerValue as number)
+    ).join('')}
     `;
   }
 
@@ -51,7 +51,7 @@ export default class SwPowerGrid extends BaseComponent {
     if (isNaN(level))
       return null;
 
-    return powerMap.get(level)
+    return powerMap.get(level);
   }
 
   get #labels() {
@@ -79,10 +79,15 @@ export default class SwPowerGrid extends BaseComponent {
     if (isCritical) setClass += ' critical';
     if (isAutoFail) setClass += ' fail';
 
+    let bonus = 0;
+
+    if (this.hasAttribute('bonus'))
+      bonus = parseInt(this.getAttribute('bonus') || '0');
+
     return /* html */ `
       <span class="${setClass}">
         <span class="dice-result">${diceValue}</span>
-        <span class="value">${!isAutoFail ? powerValue : '--'}</span>
+        <span class="value">${!isAutoFail ? (powerValue + bonus) : '--'}</span>
       </span>
     `;
   }
