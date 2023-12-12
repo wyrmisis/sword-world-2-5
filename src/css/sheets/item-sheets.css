@@ -1,4 +1,18 @@
-.sheet--item {  
+.sheet--item {
+  .header-field-group {
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+
+    &:not(:last-of-type) {
+      margin-bottom: .25em;
+    }
+  }
+
+  .window-content {
+    background: #fff;
+  }
+
   .editor.prosemirror {
     flex: 1;
   }
@@ -18,22 +32,10 @@
     &.tab--details {
       grid-template-columns: 1fr 2fr;
       gap: .5em;
-      
+
       &.active {
         display: grid;
-      }
-  
-      aside {
-        display: flex;
-        flex-direction: column;
-        gap: .5em;
-  
-        sw-input {
-          grid-column: 1/-1;
-          --input-max-width: 5em;
-        }
       }
     }
   }
 }
-

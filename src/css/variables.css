@@ -7,17 +7,17 @@
   --color-mp-meter-light: #c274c8;
 
   /* GEAR RANK COLORS */
-  --color-rank-b-light:  #8ba097;
-  --color-rank-b-dark:   #49544f;
+  --color-rank-b-light: #8ba097;
+  --color-rank-b-dark: #49544f;
 
-  --color-rank-a-light:  #51a4ad; 
-  --color-rank-a-dark:   #2d5b60;
+  --color-rank-a-light: #51a4ad;
+  --color-rank-a-dark: #2d5b60;
 
-  --color-rank-s-light:  #807edd; 
-  --color-rank-s-dark:   #383691;
+  --color-rank-s-light: #807edd;
+  --color-rank-s-dark: #383691;
 
   --color-rank-ss-light: #a079c6;
-  --color-rank-ss-dark:  #612E94;
+  --color-rank-ss-dark: #612E94;
 }
 
 @media(prefers-color-scheme: light) {
@@ -39,7 +39,7 @@
     /* HP/MP BARS */
     --color-hp-meter: var(--color-hp-meter-dark);
     --color-mp-meter: var(--color-mp-meter-dark);
-    
+
     /* GEAR RANK COLORS */
     --color-rank-b: var(--color-rank-b-dark);
     --color-rank-a: var(--color-rank-a-dark);
