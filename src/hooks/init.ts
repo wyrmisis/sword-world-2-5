@@ -22,7 +22,7 @@ import AccessoryDataModel from '../item/accessory.datamodel';
 import ConsumableDataModel from '../item/consumable.datamodel';
 // import ConsumableSheet from '../item/consumable.sheet';
 import ItemDataModel from '../item/item.datamodel';
-// import ItemsSheet from '../item/item.sheet';
+import ItemsSheet from '../item/item.sheet';
 
 // Intrinsic items -- stuff characters are or know
 // import RaceDataModel from '../item/race.datamodel';
@@ -70,6 +70,18 @@ Hooks.on('init', () => {
     character: CharacterDataModel,
     // monster: MonsterDataModel,
   };
+
+  /**
+   * @todo Move enrichers to their own file.
+   */
+  CONFIG.TextEditor.enrichers.push({
+    pattern: /@Power\[(?<level>\d)\]/gi,
+    enricher: (match, config) => {
+      const grid = document.createElement('sw-power-grid');
+      grid.setAttribute('value', match.groups.level);
+      return grid;
+    }
+  });
 
   // @ts-expect-error - FVTT types package doesn't include v11 data models yet
   CONFIG.Item.dataModels = {
@@ -123,11 +135,11 @@ Hooks.on('init', () => {
   //   makeDefault: true,
   //   label: "SW.SheetItem",
   // });
-  // Items.registerSheet(id, ItemsSheet, {
-  //   types: ["item"],
-  //   makeDefault: true,
-  //   label: "SW.SheetItem",
-  // });
+  Items.registerSheet(id, ItemsSheet, {
+    types: ["item"],
+    makeDefault: true,
+    label: "SW.SheetItem",
+  });
   // Items.registerSheet(id, RaceSheet, {
   //   types: ["race"],
   //   makeDefault: true,
