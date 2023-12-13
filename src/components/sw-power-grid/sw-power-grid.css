@@ -9,7 +9,7 @@
 
 .set {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   gap: .25em;
 }
 
@@ -22,14 +22,21 @@ svg {
   color: var(--color-text-light-highlight);
   fill: var(--color-text-light-highlight);
 }
+
 .value {}
 
 .fail .dice-result {
   background-color: var(--color-level-error);
 }
+
 .fail .value {}
 
 .critical .dice-result {
   background-color: var(--color-level-info);
 }
+
 .critical .value {}
+
+.selected:not(:is(.fail, .critical)) .dice-result {
+  background-color: var(--color-text-dark-inactive)
+}

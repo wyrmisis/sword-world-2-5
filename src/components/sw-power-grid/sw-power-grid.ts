@@ -26,11 +26,65 @@ export default class SwPowerGrid extends BaseComponent {
 
     return /* html */ `
       ${this.#labels}
-      ${[...this.#map.entries()].map(
+      ${this.#pluckedEntries.map(
       ([diceValue, powerValue]) =>
         this.#buildPowerEntry(diceValue as number, powerValue as number)
     ).join('')}
     `;
+  }
+
+  get #pluckedEntries() {
+    // If no selected value or no range value, return the values map as [...values.entries()]
+    if (this.#selected === null || this.#range === null)
+      return [...this.#map.entries()];
+
+    let keys = Array.from(this.#map.keys());
+    let startIndex = keys.indexOf(this.#selected) - this.#range;
+    let endIndex = keys.indexOf(this.#selected) + this.#range;
+
+    // Make sure we don't go out of bounds
+    startIndex = Math.max(startIndex, 0);
+    endIndex = Math.min(endIndex, keys.length - 1);
+
+    // If the selected range goes beyond the map's bounds, adjust the range
+    if (startIndex < 0) {
+      endIndex = Math.min(endIndex - startIndex, keys.length - 1);
+      startIndex = 0;
+    }
+    if (endIndex > keys.length - 1) {
+      startIndex = Math.max(0, startIndex - (endIndex - (keys.length - 1)));
+      endIndex = keys.length - 1;
+    }
+
+    // Pluck the range of entries from the values map
+    const pluckedEntries: Array<[number, any]> = [];
+    for (let i = startIndex; i <= endIndex; i++) {
+      const key = keys[i];
+      const value = this.#map.get(key);
+      if (value !== undefined) {
+        pluckedEntries.push([key, value]);
+      }
+    }
+
+    return pluckedEntries;
+  }
+
+  get #selected() {
+    if (!this.hasAttribute('selected'))
+      return null;
+    const selected = parseInt(this.getAttribute('selected'));
+    if (Number.isNaN(selected))
+      return null;
+    return selected;
+  }
+
+  get #range() {
+    if (!this.hasAttribute('range'))
+      return null;
+    const range = parseInt(this.getAttribute('range'));
+    if (Number.isNaN(range))
+      return null;
+    return range;
   }
 
   get #critical() {
@@ -78,6 +132,11 @@ export default class SwPowerGrid extends BaseComponent {
 
     if (isCritical) setClass += ' critical';
     if (isAutoFail) setClass += ' fail';
+
+    if (
+      this.hasAttribute('selected') &&
+      parseInt(this.getAttribute('selected')) === diceValue
+    ) setClass += ' selected'
 
     let bonus = 0;
 
